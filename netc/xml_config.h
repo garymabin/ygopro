@@ -1,50 +1,54 @@
 #ifndef _XML_CONFIG_H_
 #define _XML_CONFIG_H_
 
-#include "wx/string.h"
-#include <unordered_map>
-
 namespace ygopro
 {
 
-    typedef void (*CONFIG_LOAD_CALLBACK)(const wxString&, const wxString&);
+    struct ValueStruct {
+        
+        unsigned int val_type = 0;
+        long ivalue = 0;
+        double fvalue = 0.0;
+        std::wstring svalue;
+        
+        void operator = (long val) { ivalue = val; val_type = 0; }
+        void operator = (double val) { fvalue = val; val_type = 1; }
+        void operator = (const wchar_t* val) { svalue = val; val_type = 2; }
+        void operator = (const std::wstring& val) { svalue = val; val_type = 2; }
+        
+        operator unsigned int() { return static_cast<unsigned int>(ivalue); }
+        operator int() { return static_cast<int>(ivalue); }
+        operator unsigned long() { return static_cast<unsigned long>(ivalue); }
+        operator long() { return ivalue; }
+        operator float() { return static_cast<float>(fvalue); }
+        operator double() { return fvalue; }
+        operator const std::wstring&() { return svalue; }
+    };
     
 	class CommonConfig {
 
-		struct _ValueStruct {
-			bool is_string;
-			long ivalue;
-			std::string svalue;
-
-			_ValueStruct(): is_string(false), ivalue(0) {}
-			
-			void operator = (long val) { ivalue = val; is_string = false; }
-			void operator = (const char* val) { svalue = val; is_string = true; }
-			void operator = (const std::string& val) { svalue = val; is_string = true; }
-			void operator = (const wxString& val) { svalue = val.ToStdString(); is_string = true; }
-            operator unsigned int() { return (unsigned int)ivalue; }
-            operator int() { return (int)ivalue; }
-            operator unsigned long() { return (unsigned long)ivalue; }
-			operator long() { return ivalue; }
-            operator const char*() { return svalue.c_str(); }
-			operator const std::string&() { return svalue; }
-            operator wxString() { return svalue; }
-		};
-
 	public:
 
-		inline _ValueStruct& operator[] (const std::string& name) {
+		inline ValueStruct& operator[] (const std::string& name) {
 			return config_map[name];
 		}
         inline bool Exists(const std::string& name) {
             return config_map.find(name) != config_map.end();
         }
         
-		bool LoadConfig(const wxString& name, CONFIG_LOAD_CALLBACK = nullptr);
-		void SaveConfig(const wxString& name);
+        template<typename FT>
+        void ForEach(FT fun) {
+            if(fun == nullptr)
+                return;
+            for(auto& iter : config_map)
+                fun(iter.first, iter.second);
+        }
+        
+		bool LoadConfig(const std::wstring& name);
+		void SaveConfig(const std::wstring& name);
 
 	private:
-		std::unordered_map<std::string, _ValueStruct> config_map;
+		std::unordered_map<std::string, ValueStruct> config_map;
 
 	};
 

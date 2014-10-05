@@ -1,264 +1,300 @@
-#include "image_mgr.h"
-#include "game_frame.h"
 #include "../common/common.h"
+#include "../common/filesystem.h"
 
-#ifdef __WXMAC__
-#include <OpenGL/gl.h>
-#include <OpenGL/glu.h>
-#else
-#include <GL/gl.h>
-#include <GL/glu.h>
-#endif
+#include "../buildin/rapidxml.hpp"
+#include "../buildin/rapidxml_print.hpp"
+
+#include "image_mgr.h"
+#include "scene_mgr.h"
 
 namespace ygopro
 {
 
-	ImageMgr imageMgr;
-
-	ImageMgr::ImageMgr() {
-		
-	}
-
-	ImageMgr::~ImageMgr() {
-		
-	}
-
-	CardTextureInfo& ImageMgr::GetCardTexture(unsigned int id) {
+	ti4& ImageMgr::GetCardTexture(unsigned int id) {
 		auto iter = card_textures.find(id);
 		if(iter == card_textures.end()) {
-			wxString file = wxString::Format("%s/%d.jpg", ((const std::string&)commonCfg["image_path"]).c_str(), id);
+            std::string file = To<std::string>(id).append(".jpg");
 			auto& cti = card_textures[id];
-			if(!wxFileExists(file)) {
-				cti.ti = textures["unknown"];
-                cti.is_system = true;
+            int length = imageZip.GetFileLength(file);
+			if(length == 0) {
+				cti.ti = misc_textures["unknown"];
+                cti.ref_block = 0xffff;
 			} else {
-                auto& card_image = card_images[id];
-                if(card_image.img.IsOk() || card_image.img.LoadFile(file)) {
-                    LoadTexture(card_image);
-                    cti.ti.src = &card_image;
-                    cti.ti.lx = 0;
-                    cti.ti.ly = 0;
-                    cti.ti.rx = (double)card_image.img.GetWidth() / (double)card_image.t_width;
-                    cti.ti.ry = (double)card_image.img.GetHeight() / (double)card_image.t_height;
-                    cti.is_system = false;
+                unsigned short blockid = AllocBlock();
+                if(blockid == 0xffff) {
+                    cti.ti = misc_textures["unknown"];
+                    cti.ref_block = 0xffff;
                 } else {
-                    card_images.erase(id);
-                    cti.ti = textures["unknown"];
-                    cti.is_system = true;
+                    glbase::Image img;
+                    unsigned char* imgbuf = new unsigned char[length];
+                    imageZip.ReadFile(file, imgbuf);
+                    if(img.LoadMemory(imgbuf, length)) {
+                        glbase::v2ct frame_verts[4];
+                        int bx = (blockid % 20) * 100;
+                        int by = (blockid / 20) * 145;
+                        int bw = 100;
+                        int bh = 145;
+                        cti.ti.vert[0] = {(float)(bx) / 2048, (float)(by) / 2048};
+                        cti.ti.vert[1] = {(float)(bx + bw) / 2048, (float)(by) / 2048};
+                        cti.ti.vert[2] = {(float)(bx) / 2048, (float)(by + bh) / 2048};
+                        cti.ti.vert[3] = {(float)(bx + bw) / 2048, (float)(by + bh) / 2048};
+                        cti.ref_block = blockid;
+                        card_image.Load(img.GetRawData(), img.GetWidth(), img.GetHeight());
+                        glBindFramebuffer(GL_FRAMEBUFFER, frame_buffer);
+                        glViewport(0, 0, 2048, 2048);
+                        frame_verts[0].vertex = {(float)(bx) / 1024 - 1.0f, (float)(by) / 1024 - 1.0f};
+                        frame_verts[1].vertex = {(float)(bx + bw) / 1024 - 1.0f, (float)(by) / 1024 - 1.0f};
+                        frame_verts[2].vertex = {(float)(bx) / 1024 - 1.0f, (float)(by + bh) / 1024 - 1.0f};
+                        frame_verts[3].vertex = {(float)(bx + bw) / 1024 - 1.0f, (float)(by + bh) / 1024 - 1.0f};
+                        frame_verts[0].texcoord = {0.0f, 0.0f};
+                        frame_verts[1].texcoord = {(float)img.GetWidth() / card_image.GetWidth(), 0.0f};
+                        frame_verts[2].texcoord = {0.0f, (float)img.GetHeight() / card_image.GetHeight()};
+                        frame_verts[3].texcoord = {frame_verts[1].texcoord.x, frame_verts[2].texcoord.y};
+                        card_image.Bind();
+                        glBindBuffer(GL_ARRAY_BUFFER, card_buffer[0]);
+                        glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(glbase::v2ct) * 4, &frame_verts);
+                        glBindVertexArray(card_vao);
+                        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, 0);
+                        glBindVertexArray(0);
+                        glBindTexture(GL_TEXTURE_2D, 0);
+                        glBindFramebuffer(GL_FRAMEBUFFER, 0);
+                    } else {
+                        FreeBlock(blockid);
+                        cti.ti = misc_textures["unknown"];
+                        cti.ref_block = 0xffff;
+                    }
+                    delete[] imgbuf;
                 }
 			}
-            cti.ref_count++;
-            return cti;
+            return cti.ti;;
 		}
-        iter->second.ref_count++;
-		return iter->second;
+		if(iter->second.ref_block < 280)
+			ref_count[iter->second.ref_block]++;
+		return iter->second.ti;
 	}
-
-	CardTextureInfo& ImageMgr::ReloadCardTexture(unsigned int id) {
-        auto& cti = card_textures[id];
-        auto iter = card_images.find(id);
-        if(iter != card_images.end() && iter->second.t_index)
-            glDeleteTextures(1, &iter->second.t_index);
-        card_images.erase(id);
-        wxString file = wxString::Format("%s/%d.jpg", ((const std::string&)commonCfg["image_path"]).c_str(), id);
-        if(!wxFileExists(file)) {
-            cti.ti = textures["unknown"];
-            cti.is_system = true;
-        } else {
-            auto& card_image = card_images[id];
-            if(card_image.img.LoadFile(file)) {
-                LoadTexture(card_image);
-                cti.ti.src = &card_image;
-                cti.ti.lx = 0;
-                cti.ti.ly = 0;
-                cti.ti.rx = (double)card_image.img.GetWidth() / (double)card_image.t_width;
-                cti.ti.ry = (double)card_image.img.GetHeight() / (double)card_image.t_height;
-                cti.is_system = false;
-            } else {
-                card_images.erase(id);
-                cti.ti = textures["unknown"];
-                cti.is_system = true;
-            }
+    
+    ti4& ImageMgr::GetTexture(const std::string& name) {
+        return misc_textures[name];
+    }
+    
+    glbase::Texture* ImageMgr::LoadBigCardTexture(unsigned int id) {
+        static unsigned int pid = 0;
+        static glbase::Texture* pre_ret = nullptr;
+        if(pid == id)
+            return pre_ret;
+        std::string file = To<std::string>("%d.jpg", id);
+        int length = imageZip.GetFileLength(file);
+        if(length == 0) {
+            file = "unknown.jpg";
+            length = imageZip.GetFileLength(file);
         }
-        return cti;
-	}
-
+        if(length != 0) {
+            glbase::Image img;
+            unsigned char* imgbuf = new unsigned char[length];
+            imageZip.ReadFile(file, imgbuf);
+            if(img.LoadMemory(imgbuf, length)) {
+                card_image.Load(img.GetRawData(), img.GetWidth(), img.GetHeight());
+                pre_ret = &card_image;
+            } else
+                pre_ret = nullptr;
+            delete[] imgbuf;
+        } else
+            pre_ret = nullptr;
+        return pre_ret;
+    }
+    
+    ti4& ImageMgr::GetCharTex(wchar_t ch) {
+        if(ch < L'*' || ch > L'9')
+            return char_textures[2];
+        return char_textures[ch - L'*'];
+    }
+    
     void ImageMgr::UnloadCardTexture(unsigned int id) {
         auto iter = card_textures.find(id);
         if(iter == card_textures.end())
             return;
         auto& cti = iter->second;
-        if(cti.ref_count == 0)
-            return;
-        cti.ref_count--;
-        if(!cti.is_system && cti.ref_count == 0 && cti.ti.src->t_index) {
-            glDeleteTextures(1, &cti.ti.src->t_index);
-            cti.ti.src->t_index = 0;
-        }
-        card_textures.erase(iter);
-		card_images.erase(id);
+        if(FreeBlock(cti.ref_block))
+            card_textures.erase(iter);
     }
     
 	void ImageMgr::UnloadAllCardTexture() {
-        for(auto& card_image : card_images) {
-            if(card_image.second.t_index) {
-                glDeleteTextures(1, &card_image.second.t_index);
-                card_image.second.t_index = 0;
-            }
-        }
         card_textures.clear();
-        card_images.clear();
-	}
-
-	void ImageMgr::LoadTexture(SrcImageInfo& img_info) {
-        wxImage& img = img_info.img;
-		unsigned int tid;
-		glGenTextures(1, &tid);
-		glBindTexture(GL_TEXTURE_2D, tid);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-		unsigned int imagex = img.GetWidth();
-		unsigned int imagey = img.GetHeight();
-		unsigned int tx = texlen(img.GetWidth());
-		unsigned int ty = texlen(img.GetHeight());
-		unsigned char* px = new unsigned char[tx * ty * 4];
-		unsigned char* pxdata = img.GetData();
-		unsigned char* apdata = img.GetAlpha();	
-		memset(px, 0, sizeof(unsigned char) * tx * ty * 4);
-		for(unsigned int y = 0; y < imagey; ++y) {
-			for(unsigned int x = 0; x < imagex; ++x) {
-				px[(x + y * tx) * 4 + 0] = pxdata[(x + y * imagex) * 3 + 0];
-				px[(x + y * tx) * 4 + 1] = pxdata[(x + y * imagex) * 3 + 1];
-				px[(x + y * tx) * 4 + 2] = pxdata[(x + y * imagex) * 3 + 2];
-				if(apdata)
-					px[(x + y * tx) * 4 + 3] = 255 - apdata[x + y * imagex];
-			}
-		}
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, tx, ty, 0, GL_RGBA, GL_UNSIGNED_BYTE, px);
-        glBindTexture(GL_TEXTURE_2D, 0);
-		delete[] px;
-        img_info.t_index = tid;
-        img_info.t_width = tx;
-        img_info.t_height = ty;
-	}
-
-    void ImageMgr::InitTextures(bool force) {
-        static bool first_time = true;
-        if(!first_time && !force)
-            return;
-        first_time = false;
-        for(auto& src : src_images) {
-            if(src.second.t_index)
-                glDeleteTextures(1, &src.second.t_index);
-            LoadTexture(src.second);
+        unuse_block.clear();
+        for(short i = 7; i < 280; ++i) {
+            ref_count[i] = 0;
+            unuse_block.push_back(i);
         }
+	}
+
+    unsigned short ImageMgr::AllocBlock() {
+        if(unuse_block.size() == 0)
+            return 0xffff;
+        short ret = unuse_block.front();
+        unuse_block.pop_front();
+        ref_count[ret]++;
+        return ret;
     }
     
-	void ImageMgr::LoadSingleImage(const std::string& name, const wxString& file) {
-        if(!wxFileExists(file))
-            return;
-        auto& image = src_images[name];
-        if(image.img.LoadFile(file))
-        {
-            single_images[name] = file;
-            image.t_index = 0;
-            image.t_width = texlen(image.img.GetWidth());
-            image.t_height = texlen(image.img.GetWidth());
-            auto& ti = textures[name];
-            ti.src = &image;
-            ti.lx = 0;
-            ti.ly = 0;
-            ti.rx = image.img.GetWidth() / (double)image.t_width;
-            ti.ry = image.img.GetHeight() / (double)image.t_height;
-        } else
-            src_images.erase(name);
-	}
-
-	bool ImageMgr::LoadImageConfig(const wxString& name) {
-		wxXmlDocument doc;
-        if(!wxFileExists(name))
+    bool ImageMgr::FreeBlock(unsigned short id) {
+        if(id >= 280)
             return false;
-		if(!doc.Load(name, wxT("UTF-8"), wxXMLDOC_KEEP_WHITESPACE_NODES))
-			return false;
-        wxXmlNode* root = doc.GetRoot();
-		wxXmlNode* child = root->GetChildren();
-		while (child) {
-            if (child->GetName() == wxT("image")) {
-                std::string name = child->GetAttribute("name").ToStdString();
-                wxString path = child->GetAttribute("path");
-                if(wxFileExists(path)) {
-                    auto& src = src_images[name];
-                    if(src.img.LoadFile(path))
-                    {
-                        src.t_index = 0;
-                        src.t_width = texlen(src.img.GetWidth());
-                        src.t_height = texlen(src.img.GetHeight());
-                    } else
-                        src_images.erase(name);
+        if(ref_count[id] == 0)
+            return false;
+        ref_count[id]--;
+        if(ref_count[id] == 0) {
+            unuse_block.push_back(id);
+            return true;
+        }
+        return false;
+    }
+    
+    void ImageMgr::InitTextures(const std::wstring& image_path) {
+        card_texture.Load(nullptr, 2048, 2048);
+        for(short i = 7; i < 280; ++i)
+            unuse_block.push_back(i);
+        ref_count.resize(280);
+        glGenFramebuffers(1, &frame_buffer);
+        glBindFramebuffer(GL_FRAMEBUFFER, frame_buffer);
+        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, card_texture.GetTextureId(), 0);
+        glBindFramebuffer(GL_FRAMEBUFFER, 0);
+        glGenBuffers(2, card_buffer);
+        glBindBuffer(GL_ARRAY_BUFFER, card_buffer[0]);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(glbase::v2ct) * 4, nullptr, GL_DYNAMIC_DRAW);
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
+        unsigned short index[] = {0, 2, 1, 1, 2, 3};
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, card_buffer[1]);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(index), index, GL_STATIC_DRAW);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+        glGenVertexArrays(1, &card_vao);
+        glBindVertexArray(card_vao);
+        glBindBuffer(GL_ARRAY_BUFFER, card_buffer[0]);
+        glEnableVertexAttribArray(0);
+        glEnableVertexAttribArray(1);
+        glEnableVertexAttribArray(2);
+        glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(glbase::v2ct), 0);
+        glVertexAttribPointer(1, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(glbase::v2ct), (const GLvoid*)glbase::v2ct::color_offset);
+        glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(glbase::v2ct), (const GLvoid*)glbase::v2ct::tex_offset);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, card_buffer[1]);
+        glBindVertexArray(0);
+		std::vector<std::wstring> image_files;
+		FileSystem::TraversalDir(image_path, [&image_path, &image_files](const std::wstring& name, bool isdir) {
+			if(!isdir && name.find(L".zip") == (name.size() - 4)) {
+                auto path = image_path;
+                image_files.push_back(path.append(L"/").append(name));
+            }
+		});
+        std::sort(image_files.begin(), image_files.end());
+        imageZip.Load(image_files);
+    }
+
+    void ImageMgr::UninitTextures() {
+        glDeleteFramebuffers(1, &frame_buffer);
+        glDeleteBuffers(2, card_buffer);
+        glDeleteVertexArrays(1, &card_vao);
+        card_texture.Unload();
+        misc_texture.Unload();
+        bg_texture.Unload();
+        card_image.Unload();
+    }
+    
+	bool ImageMgr::LoadImageConfig(const std::wstring& name) {
+        if(!FileSystem::IsFileExists(name))
+            return false;
+        TextFile f(To<std::string>(name));
+        rapidxml::xml_document<> doc;
+        doc.parse<0>(f.Data());
+        rapidxml::xml_node<>* root = doc.first_node();
+        rapidxml::xml_node<>* config_node = root->first_node();
+        while(config_node) {
+            std::string config_name = config_node->name();
+            rapidxml::xml_attribute<>* attr = config_node->first_attribute();
+            if(config_name == "image") {
+                std::string name = attr->value();
+                attr = attr->next_attribute();
+                std::string path = attr->value();
+                if(FileSystem::IsFileExists(path)) {
+                    glbase::Image img;
+                    if(img.LoadFile(path)) {
+                        if(name == "card")
+                            card_texture.Update(img.GetRawData(), 0, 0, img.GetWidth(), img.GetHeight());
+                        else if(name == "misc")
+                            misc_texture.Load(img.GetRawData(), img.GetWidth(), img.GetHeight());
+                        else if(name == "bg")
+                            bg_texture.Load(img.GetRawData(), img.GetWidth(), img.GetHeight());
+                    }
                 }
-            } else if (child->GetName() == wxT("texture")) {
-				long x, y, w, h;
-                std::string src = child->GetAttribute("src").ToStdString();
-				std::string name = child->GetAttribute("name").ToStdString();
-				child->GetAttribute("x").ToLong(&x);
-				child->GetAttribute("y").ToLong(&y);
-				child->GetAttribute("w").ToLong(&w);
-				child->GetAttribute("h").ToLong(&h);
-                auto iter = src_images.find(src);
-                if(iter != src_images.end()) {
-                    TextureInfo& ti = textures[name];
-                    ti.src = &iter->second;
-                    ti.lx = x / (double)iter->second.t_width;
-                    ti.ly = y / (double)iter->second.t_height;
-                    ti.rx = ti.lx + w / (double)iter->second.t_width;
-                    ti.ry = ti.ly + h / (double)iter->second.t_height;
+            } else if(config_name == "texture") {
+                glbase::Texture* ptex = nullptr;
+                std::string src = attr->value();
+                attr = attr->next_attribute();
+                std::string name = attr->value();
+                if(src == "card")
+                    ptex = &card_texture;
+                else if(src == "misc")
+                    ptex = &misc_texture;
+                else if(src == "bg")
+                    ptex = &bg_texture;
+                if(ptex) {
+                    auto& ti = misc_textures[name];
+                    attr = attr->next_attribute();
+                    int x = To<int>(attr->value());
+                    attr = attr->next_attribute();
+                    int y = To<int>(attr->value());
+                    attr = attr->next_attribute();
+                    int w = To<int>(attr->value());
+                    attr = attr->next_attribute();
+                    int h = To<int>(attr->value());
+                    ti.vert[0].x = (float)x / ptex->GetWidth();
+                    ti.vert[0].y = (float)y / ptex->GetHeight();
+                    ti.vert[1].x = (float)(x + w) / ptex->GetWidth();
+                    ti.vert[1].y = (float)y / ptex->GetHeight();
+                    ti.vert[2].x = (float)x / ptex->GetWidth();
+                    ti.vert[2].y = (float)(y + h) / ptex->GetHeight();
+                    ti.vert[3].x = (float)(x + w) / ptex->GetWidth();
+                    ti.vert[3].y = (float)(y + h) / ptex->GetHeight();
                 }
-			} else if(child->GetName() == wxT("layout")) {
-				LayoutInfo li;
-				std::string name = child->GetAttribute("name").ToStdString();
-				wxString style = child->GetAttribute("style");
-				li.click = child->GetAttribute("click");
-				std::string texture = child->GetAttribute("texture").ToStdString();
-				child->GetAttribute("x1").ToDouble(&li.x1);
-				child->GetAttribute("x2").ToDouble(&li.x2);
-				child->GetAttribute("x3").ToDouble(&li.x3);
-				child->GetAttribute("x4").ToDouble(&li.x4);
-				child->GetAttribute("y1").ToDouble(&li.y1);
-				child->GetAttribute("y2").ToDouble(&li.y2);
-				child->GetAttribute("y3").ToDouble(&li.y3);
-				child->GetAttribute("y4").ToDouble(&li.y4);
-				if(style == "button")
-					li.style = LAYOUT_BUTTON;
-				else if(style == "lp")
-					li.style = LAYOUT_LP;
-				else if(style == "text")
-					li.style = LAYOUT_TEXT;
-				else if(style == "phase")
-					li.style = LAYOUT_PHASE;
-				else
-					li.style = LAYOUT_STATIC;
-				if(texture == "")
-					li.ptex = nullptr;
-				else
-					li.ptex = &textures[texture];
-				layouts.push_back(li);
-				if(li.click != "")
-					clickable.push_back(li);
-			}
-			child = child->GetNext();
-		}
-		TextureInfo& ti = textures["number"];
-		float w = (ti.rx - ti.lx) / 4;
-		float h = (ti.ry - ti.ly) / 4;
-		for(int i = 0; i < 16; ++i) {
-			TextureInfo nti;
-            nti.src = ti.src;
-			nti.lx = ti.lx + (i % 4) * w;
-			nti.ly = ti.ly + (i / 4) * h;
-			nti.rx = nti.lx + w;
-			nti.ry = nti.ly + h;
-			text_texture.push_back(nti);
-		}
+            } else if(config_name == "points") {
+                glbase::Texture* ptex = nullptr;
+                std::string src = attr->value();
+                attr = attr->next_attribute();
+                std::string name = attr->value();
+                if(src == "card")
+                    ptex = &card_texture;
+                else if(src == "misc")
+                    ptex = &misc_texture;
+                else if(src == "bg")
+                    ptex = &bg_texture;
+                if(ptex) {
+                    auto& ti = misc_textures[name];
+                    int val[8];
+                    for(int i = 0; i < 8; ++i) {
+                        attr = attr->next_attribute();
+                        val[i] = To<int>(attr->value());
+                    }
+                    ti.vert[0].x = (float)val[0] / ptex->GetWidth();
+                    ti.vert[0].y = (float)val[1] / ptex->GetHeight();
+                    ti.vert[1].x = (float)val[2] / ptex->GetWidth();
+                    ti.vert[1].y = (float)val[3] / ptex->GetHeight();
+                    ti.vert[2].x = (float)val[4] / ptex->GetWidth();
+                    ti.vert[2].y = (float)val[5] / ptex->GetHeight();
+                    ti.vert[3].x = (float)val[6] / ptex->GetWidth();
+                    ti.vert[3].y = (float)val[7] / ptex->GetHeight();
+                }
+            }
+            config_node = config_node->next_sibling();
+        }
+        auto& char_tex = misc_textures["char"];
+        float difx = (char_tex.vert[1].x - char_tex.vert[0].x) / 4;
+        float dify = (char_tex.vert[2].y - char_tex.vert[0].y) / 4;
+        for(int i = 0; i < 16; ++i) {
+            int x = i % 4;
+            int y = i / 4;
+            char_textures[i].vert[0] = char_tex.vert[0] + v2f{difx * x, dify * y};
+            char_textures[i].vert[1] = char_tex.vert[0] + v2f{difx * (x + 1), dify * y};
+            char_textures[i].vert[2] = char_tex.vert[0] + v2f{difx * x, dify * (y + 1)};
+            char_textures[i].vert[3] = char_tex.vert[0] + v2f{difx * (x + 1), dify * (y + 1)};
+        }
         return true;
 	}
 

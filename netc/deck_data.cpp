@@ -1,16 +1,11 @@
+#include "../common/common.h"
+#include "../common/tokenizer.h"
+
 #include "card_data.h"
 #include "deck_data.h"
 
-#include "wx/wfstream.h"
-#include "wx/txtstrm.h"
-#include "wx/tokenzr.h"
-#include "../common/hash.h"
-#include <algorithm>
-
 namespace ygopro
 {
-    
-    LimitRegulationMgr limitRegulationMgr;
     
     void DeckData::Clear() {
         main_deck.clear();
@@ -46,7 +41,7 @@ namespace ygopro
         xyzcount = 0;
         fuscount = 0;
         for(auto iter : main_deck) {
-            auto cd = std::get<0>(iter);
+            auto cd = iter->data;
             if(cd->type & 0x1)
                 mcount++;
             else if(cd->type & 0x2)
@@ -56,7 +51,7 @@ namespace ygopro
             counts[cd->alias ? cd->alias : cd->code]++;
         }
         for(auto iter : extra_deck) {
-            auto cd = std::get<0>(iter);
+            auto cd = iter->data;
             if(cd->type & 0x800000)
                 xyzcount++;
             else if(cd->type & 0x2000)
@@ -66,38 +61,38 @@ namespace ygopro
             counts[cd->alias ? cd->alias : cd->code]++;
         }
         for(auto iter : side_deck) {
-            auto cd = std::get<0>(iter);
+            auto cd = iter->data;
             counts[cd->alias ? cd->alias : cd->code]++;
         }
     }
     
-    bool DeckData::LoadFromFile(const wxString& file) {
-        wxFileInputStream deck_file(file);
-        if(!deck_file.IsOk())
+    bool DeckData::LoadFromFile(const std::wstring& file) {
+        std::ifstream deck_file(To<std::string>(file));
+        if(!deck_file)
             return false;
         main_deck.clear();
         extra_deck.clear();
         side_deck.clear();
-        wxTextInputStream ts(deck_file);
         bool side = false;
-        unsigned long code;
-        while(!deck_file.Eof()) {
-            wxString line = ts.ReadLine();
-            if(line.IsEmpty() || line[0] == wxT('#'))
+        unsigned int code;
+        while(!deck_file.eof()) {
+            std::string line;
+            std::getline(deck_file, line);
+            if(line.empty() || line[0] == '#')
                 continue;
-            if(line[0] == wxT('!')) {
+            if(line[0] == '!') {
                 side = true;
                 continue;
             }
-            line.ToULong(&code);
-            CardData* ptr = dataMgr[(unsigned int)code];
+            code = To<unsigned int>(line);
+            CardData* ptr = DataMgr::Get()[(unsigned int)code];
             if(ptr == nullptr || (ptr->type & 0x4000))
                 continue;
             if(side)
-                side_deck.push_back(std::make_tuple(ptr, nullptr, 0));
+                side_deck.push_back(std::make_shared<DeckCardData>(ptr, 0));
             else {
                 if(ptr->type & 0x802040) {
-                    extra_deck.push_back(std::make_tuple(ptr, nullptr, 0));
+                    extra_deck.push_back(std::make_shared<DeckCardData>(ptr, 0));
                     if(ptr->type & 0x800000)
                         xyzcount++;
                     else if(ptr->type & 0x2000)
@@ -105,7 +100,7 @@ namespace ygopro
                     else
                         fuscount++;
                 } else {
-                    main_deck.push_back(std::make_tuple(ptr, nullptr, 0));
+                    main_deck.push_back(std::make_shared<DeckCardData>(ptr, 0));
                     if(ptr->type & 0x1)
                         mcount++;
                     else if(ptr->type & 0x2)
@@ -116,11 +111,11 @@ namespace ygopro
             }
             counts[ptr->alias ? ptr->alias : ptr->code]++;
         }
-        limitRegulationMgr.GetDeckCardLimitCount(*this);
+        LimitRegulationMgr::Get().GetDeckCardLimitCount(*this);
         return true;
     }
     
-    bool DeckData::LoadFromString(const wxString& deck) {
+    bool DeckData::LoadFromString(const std::string& deck) {
         static const char* base64_chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_";
         static unsigned char base64_dec_table[256] = {0};
         static bool base64_dec_init = false;
@@ -139,16 +134,16 @@ namespace ygopro
             packed_data |= ((unsigned int)base64_dec_table[(unsigned char)deck[i + 0]]) << 24;
             unsigned int code = packed_data & 0x7ffffff;
             unsigned int count = (packed_data >> 27) & 0x3;
-            CardData* ptr = dataMgr[code];
+            CardData* ptr = DataMgr::Get()[code];
             if(ptr == nullptr || (ptr->type & 0x4000))
                 continue;
             if(packed_data & 0x20000000) {
                 for(unsigned int j = 0; j < count; ++j)
-                    side_deck.push_back(std::make_tuple(ptr, nullptr, 0));
+                    side_deck.push_back(std::make_shared<DeckCardData>(ptr, 0));
             } else {
                 if(ptr->type & 0x802040) {
                     for(unsigned int j = 0; j < count; ++j) {
-                        extra_deck.push_back(std::make_tuple(ptr, nullptr, 0));
+                        extra_deck.push_back(std::make_shared<DeckCardData>(ptr, 0));
                         if(ptr->type & 0x800000)
                             xyzcount++;
                         else if(ptr->type & 0x2000)
@@ -158,7 +153,7 @@ namespace ygopro
                     }
                 } else {
                     for(unsigned int j = 0; j < count; ++j) {
-                        main_deck.push_back(std::make_tuple(ptr, nullptr, 0));
+                        main_deck.push_back(std::make_shared<DeckCardData>(ptr, 0));
                         if(ptr->type & 0x1)
                             mcount++;
                         else if(ptr->type & 0x2)
@@ -170,28 +165,27 @@ namespace ygopro
             }
             counts[ptr->alias ? ptr->alias : ptr->code]++;
         }
-        limitRegulationMgr.GetDeckCardLimitCount(*this);
+        LimitRegulationMgr::Get().GetDeckCardLimitCount(*this);
         return true;
     }
     
-    void DeckData::SaveToFile(const wxString& file) {
-        wxFileOutputStream deck_file(file);
-        if(!deck_file.IsOk())
+    void DeckData::SaveToFile(const std::wstring& file) {
+        std::ofstream deck_file(To<std::string>(file));
+        if(!deck_file)
             return;
-        wxTextOutputStream ts(deck_file);
-        ts << "#Created by ygopro deck editor." << endl << "#main" << endl;
+        deck_file << "#Created by ygopro deck editor." << std::endl << "#main" << std::endl;
         for(auto& cd : main_deck)
-            ts << std::get<0>(cd)->code << " #" << std::get<0>(cd)->name << endl;
+            deck_file << cd->data->code << " #" << To<std::string>(cd->data->name) << std::endl;
         for(auto& cd : extra_deck)
-            ts << std::get<0>(cd)->code << " #" << std::get<0>(cd)->name << endl;
+            deck_file << cd->data->code << " #" << To<std::string>(cd->data->name) << std::endl;
         if(side_deck.size()) {
-            ts << "!side" << endl;
+            deck_file << "!side" << std::endl;
             for(auto& cd : side_deck)
-                ts << std::get<0>(cd)->code << " #" << std::get<0>(cd)->name << endl;
+                deck_file << cd->data->code << " #" << To<std::string>(cd->data->name) << std::endl;
         }
     }
     
-    wxString DeckData::SaveToString() {
+    std::string DeckData::SaveToString() {
         static const char* base64_chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_";
         auto m = main_deck;
         auto e = extra_deck;
@@ -201,8 +195,8 @@ namespace ygopro
         char* deck_pstr = deck_string;
         for(size_t i = 0; i < main_deck.size(); ++i) {
             unsigned int count = 1;
-            unsigned int code = std::get<0>(main_deck[i])->code;
-            while(i < main_deck.size() - 1 && code == std::get<0>(main_deck[i + 1])->code) {
+            unsigned int code = main_deck[i]->data->code;
+            while(i < main_deck.size() - 1 && code == main_deck[i + 1]->data->code) {
                 count++;
                 i++;
             }
@@ -216,8 +210,8 @@ namespace ygopro
         }
         for(size_t i = 0; i < extra_deck.size(); ++i) {
             unsigned int count = 1;
-            unsigned int code = std::get<0>(extra_deck[i])->code;
-            while(i < extra_deck.size() - 1 && code == std::get<0>(extra_deck[i + 1])->code) {
+            unsigned int code = extra_deck[i]->data->code;
+            while(i < extra_deck.size() - 1 && code == extra_deck[i + 1]->data->code) {
                 count++;
                 i++;
             }
@@ -231,8 +225,8 @@ namespace ygopro
         }
         for(size_t i = 0; i < side_deck.size(); ++i) {
             unsigned int count = 1;
-            unsigned int code = std::get<0>(side_deck[i])->code;
-            while(i < side_deck.size() - 1 && code == std::get<0>(side_deck[i + 1])->code) {
+            unsigned int code = side_deck[i]->data->code;
+            while(i < side_deck.size() - 1 && code == side_deck[i + 1]->data->code) {
                 count++;
                 i++;
             }
@@ -247,26 +241,29 @@ namespace ygopro
         main_deck = m;
         extra_deck = e;
         side_deck = s;
-        wxString deckstr(deck_string);
+        std::string deckstr(deck_string);
         return std::move(deckstr);
     }
     
-    bool DeckData::InsertCard(unsigned int code, unsigned int pos, unsigned int index, bool strict, bool checkc) {
-        CardData* cd = dataMgr[code];
+    std::shared_ptr<DeckCardData> DeckData::InsertCard(unsigned int pos, unsigned int index, unsigned int code, bool checkc) {
+        CardData* cd = DataMgr::Get()[code];
         if(cd == nullptr || (cd->type & 0x4000))
-            return false;
-        unsigned int limit = limitRegulationMgr.GetCardLimitCount(code);
+            return nullptr;
+        unsigned int limit = LimitRegulationMgr::Get().GetCardLimitCount(code);
         if(checkc && ((cd->alias && counts[cd->alias] >= limit) || (!cd->alias && counts[code] >= limit)))
-           return false;
-        auto tp = std::make_tuple(cd, nullptr, limit);
+           return nullptr;
+        std::shared_ptr<DeckCardData> ret = nullptr;
         if(pos == 1 || pos == 2) {
             if(cd->type & 0x802040) {
-                if(strict && pos == 1)
-                    return false;
-                if(index >= extra_deck.size())
+                if(index >= extra_deck.size()) {
+                    auto tp = std::make_shared<DeckCardData>(cd, limit);
                     extra_deck.push_back(tp);
-                else
+                    ret = *extra_deck.rbegin();
+                } else {
+                    auto tp = std::make_shared<DeckCardData>(cd, limit);
                     extra_deck.insert(extra_deck.begin() + index, tp);
+                    ret = extra_deck[index];
+                }
                 if(cd->type & 0x800000)
                     xyzcount++;
                 else if(cd->type & 0x2000)
@@ -274,12 +271,15 @@ namespace ygopro
                 else
                     fuscount++;
             } else {
-                if(strict && pos == 2)
-                    return false;
-                if(index >= main_deck.size())
+                if(index >= main_deck.size()) {
+                    auto tp = std::make_shared<DeckCardData>(cd, limit);
                     main_deck.push_back(tp);
-                else
+                    ret = *main_deck.rbegin();
+                } else {
+                    auto tp = std::make_shared<DeckCardData>(cd, limit);
                     main_deck.insert(main_deck.begin() + index, tp);
+                    ret = main_deck[index];
+                }
                 if(cd->type & 0x1)
                     mcount++;
                 else if(cd->type & 0x2)
@@ -288,13 +288,18 @@ namespace ygopro
                     tcount++;
             }
         } else if(pos == 3) {
-            if(index >= side_deck.size())
+            if(index >= side_deck.size()) {
+                auto tp = std::make_shared<DeckCardData>(cd, limit);
                 side_deck.push_back(tp);
-            else
+                ret = *side_deck.rbegin();
+            } else {
+                auto tp = std::make_shared<DeckCardData>(cd, limit);
                 side_deck.insert(side_deck.begin() + index, tp);
+                ret = side_deck[index];
+            }
         }
         counts[cd->alias ? cd->alias : code]++;
-        return true;
+        return ret;
     }
     
     bool DeckData::RemoveCard(unsigned int pos, unsigned int index) {
@@ -304,7 +309,7 @@ namespace ygopro
             if(index >= main_deck.size())
                 return false;
             auto& ecd = main_deck[index];
-            CardData* cd = std::get<0>(ecd);
+            CardData* cd = ecd->data;
             if(cd->type & 0x1)
                 mcount--;
             else if(cd->type & 0x2)
@@ -317,7 +322,7 @@ namespace ygopro
             if(index >= extra_deck.size())
                 return false;
             auto& ecd = extra_deck[index];
-            CardData* cd = std::get<0>(ecd);
+            CardData* cd = ecd->data;
             if(cd->type & 0x800000)
                 xyzcount--;
             else if(cd->type & 0x2000)
@@ -330,27 +335,21 @@ namespace ygopro
             if(index >= side_deck.size())
                 return false;
             auto& ecd = side_deck[index];
-            CardData* cd = std::get<0>(ecd);
+            CardData* cd = ecd->data;
             side_deck.erase(side_deck.begin() + index);
             counts[cd->alias ? cd->alias : cd->code]--;
         }
         return true;
     }
     
-    bool DeckData::deck_sort(const std::tuple<CardData*, CardTextureInfo*, int>& c1, const std::tuple<CardData*, CardTextureInfo*, int>& c2) {
-        CardData* p1 = std::get<0>(c1);
-        CardData* p2 = std::get<0>(c2);
-        return CardData::card_sort(p1, p2);
+    bool DeckData::deck_sort(const std::shared_ptr<DeckCardData>& c1, const std::shared_ptr<DeckCardData>& c2) {
+        return CardData::card_sort(c1->data, c2->data);
     }
     
-    bool DeckData::deck_sort_limit(const std::tuple<CardData*, CardTextureInfo*, int>& c1, const std::tuple<CardData*, CardTextureInfo*, int>& c2) {
-        int l1 = std::get<2>(c1);
-        int l2 = std::get<2>(c2);
-        if(l1 != l2)
-            return l1 < l2;
-        CardData* p1 = std::get<0>(c1);
-        CardData* p2 = std::get<0>(c2);
-        return CardData::card_sort(p1, p2);
+    bool DeckData::deck_sort_limit(const std::shared_ptr<DeckCardData>& c1, const std::shared_ptr<DeckCardData>& c2) {
+        if(c1->limit != c2->limit)
+            return c1->limit < c2->limit;
+        return CardData::card_sort(c1->data, c2->data);
     }
     
     unsigned int LimitRegulation::get_hash() {
@@ -369,28 +368,28 @@ namespace ygopro
         return 0;
     }
     
-    void LimitRegulationMgr::LoadLimitRegulation(const wxString& file, const wxString& default_name) {
-        wxFileInputStream ban_file(file);
-        if(!ban_file.IsOk())
+    void LimitRegulationMgr::LoadLimitRegulation(const std::wstring& file, const std::wstring& default_name) {
+        std::ifstream ban_file(To<std::string>(file));
+        if(!ban_file)
             return;
-        wxTextInputStream ts(ban_file);
-        unsigned long code, count;
+        unsigned int code, count;
         LimitRegulation* plist = nullptr;
-        while(!ban_file.Eof()) {
-            wxString line = ts.ReadLine();
-            if(line.IsEmpty() || line[0] == wxT('#'))
+        while(!ban_file.eof()) {
+            std::string line;
+            std::getline(ban_file, line);
+            if(line.empty() || line[0] == '#')
                 continue;
-            if(line[0] == wxT('!')) {
+            if(line[0] == '!') {
                 limit_regulations.resize(limit_regulations.size() + 1);
                 plist = &(*limit_regulations.rbegin());
-                plist->name = line.Right(line.Length() - 1);
+                plist->name = To<std::wstring>(line.substr(1));
                 continue;
             }
             if(plist == nullptr)
                 continue;
-            wxStringTokenizer tk(line, wxT(" \t\r\n"), wxTOKEN_STRTOK);
-            tk.GetNextToken().ToULong(&code);
-            tk.GetNextToken().ToULong(&count);
+            Tokenizer<> tk(line, " \t\r\n");
+            code = To<unsigned int>(tk[0]);
+            count = To<unsigned int>(tk[1]);
             if(code == 0)
                 continue;
             plist->counts[(unsigned int)code] = (unsigned int)count;
@@ -421,39 +420,39 @@ namespace ygopro
     void LimitRegulationMgr::GetDeckCardLimitCount(DeckData& deck) {
         if(!current_list) {
             for(auto& cd : deck.main_deck)
-                std::get<2>(cd) = 3;
+                cd->limit = 3;
             for(auto& cd : deck.extra_deck)
-                std::get<2>(cd) = 3;
+                cd->limit = 3;
             for(auto& cd : deck.side_deck)
-                std::get<2>(cd) = 3;
+                cd->limit = 3;
             return;
         }
         for(auto& cd : deck.main_deck) {
-            auto cdata = std::get<0>(cd);
+            auto cdata = cd->data;
             unsigned int code = cdata->alias ? cdata->alias : cdata->code;
             auto iter = current_list->counts.find(code);
             if(iter == current_list->counts.end())
-                std::get<2>(cd) = 3;
+                cd->limit = 3;
             else
-                std::get<2>(cd) = iter->second;
+                cd->limit = iter->second;
         }
         for(auto& cd : deck.extra_deck) {
-            auto cdata = std::get<0>(cd);
+            auto cdata = cd->data;
             unsigned int code = cdata->alias ? cdata->alias : cdata->code;
             auto iter = current_list->counts.find(code);
             if(iter == current_list->counts.end())
-                std::get<2>(cd) = 3;
+                cd->limit = 3;
             else
-                std::get<2>(cd) = iter->second;
+                cd->limit = iter->second;
         }
         for(auto& cd : deck.side_deck) {
-            auto cdata = std::get<0>(cd);
+            auto cdata = cd->data;
             unsigned int code = cdata->alias ? cdata->alias : cdata->code;
             auto iter = current_list->counts.find(code);
             if(iter == current_list->counts.end())
-                std::get<2>(cd) = 3;
+                cd->limit = 3;
             else
-                std::get<2>(cd) = iter->second;
+                cd->limit = iter->second;
         }
     }
     
@@ -467,17 +466,17 @@ namespace ygopro
             return iter->second;
     }
     
-    std::vector<CardData*> LimitRegulationMgr::FilterCard(unsigned int limit, const FilterCondition& fc, const wxString& fs, bool check_desc) {
+    std::vector<CardData*> LimitRegulationMgr::FilterCard(unsigned int limit, const FilterCondition& fc) {
         std::vector<CardData*> result;
         for(auto& iter : current_list->counts) {
             if(iter.second != limit)
                 continue;
-            CardData* cd = dataMgr[iter.first];
-            if(cd && cd->CheckCondition(fc, fs, check_desc)) {
+            CardData* cd = DataMgr::Get()[iter.first];
+            if(cd && cd->CheckCondition(fc)) {
                 result.push_back(cd);
-                auto aliases = dataMgr.AllAliases(cd->code);
+                auto aliases = DataMgr::Get().AllAliases(cd->code);
                 for(auto acd : aliases)
-                    result.push_back(dataMgr[acd]);
+                    result.push_back(DataMgr::Get()[acd]);
             }
         }
         if(result.size())
@@ -490,15 +489,15 @@ namespace ygopro
         if(!current_list)
             return;
         for(auto& iter : current_list->counts) {
-            if(iter.second != limit)
+            if(iter.second != (unsigned int)limit)
                 continue;
-            CardData* cd = dataMgr[iter.first];
+            CardData* cd = DataMgr::Get()[iter.first];
             if(!cd)
                 continue;
             if(cd->type & 0x802040)
-                deck.extra_deck.push_back(std::make_tuple(cd, nullptr, iter.second));
+                deck.extra_deck.push_back(std::make_shared<DeckCardData>(cd, iter.second));
             else
-                deck.main_deck.push_back(std::make_tuple(cd, nullptr, iter.second));
+                deck.main_deck.push_back(std::make_shared<DeckCardData>(cd, iter.second));
         }
         deck.CalCount();
         std::sort(deck.main_deck.begin(), deck.main_deck.end(), DeckData::deck_sort_limit);

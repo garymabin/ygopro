@@ -23,11 +23,14 @@ function c73136204.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c73136204.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>=Duel.GetFieldGroupCount(tp,0,LOCATION_ONFIELD) end
+	if chk==0 then
+		local ac=Duel.GetFieldGroupCount(tp,0,LOCATION_ONFIELD)
+		return ac>0 and Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>=ac
+	end
 end
 function c73136204.operation(e,tp,eg,ep,ev,re,r,rp)
 	local ac=Duel.GetFieldGroupCount(tp,0,LOCATION_ONFIELD)
-	if Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)<ac then return end
+	if ac==0 or Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)<ac then return end
 	Duel.ConfirmDecktop(tp,ac)
 	local g=Duel.GetDecktopGroup(tp,ac)
 	local sg=g:Filter(Card.IsRace,nil,RACE_PLANT)
@@ -47,7 +50,7 @@ end
 function c73136204.tdcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:IsPreviousLocation(LOCATION_DECK) and
-		(c:IsReason(REASON_REVEAL) or c:IsPreviousPosition(POS_FACEUP) or Duel.IsPlayerAffectedByEffect(tp,EFFECT_REVERSE_DECK))
+		(c:IsReason(REASON_REVEAL) or c:GetPreviousPosition()==POS_FACEUP_DEFENCE or Duel.IsPlayerAffectedByEffect(tp,EFFECT_REVERSE_DECK))
 end
 function c73136204.filter(c)
 	return c:IsSetCard(0x90) and not c:IsCode(73136204) and c:IsAbleToDeck()
@@ -63,7 +66,10 @@ function c73136204.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
 	local sg=g:Filter(Card.IsRelateToEffect,nil,e)
 	if sg:GetCount()>0 then
-		local ct=Duel.SendtoDeck(sg,nil,0,REASON_EFFECT)
+		Duel.SendtoDeck(sg,nil,0,REASON_EFFECT)
+		local og=Duel.GetOperatedGroup()
+		local ct=og:FilterCount(Card.IsLocation,nil,LOCATION_DECK)
+		if ct==0 then return end
 		Duel.SortDecktop(tp,tp,ct)
 		for i=1,ct do
 			local mg=Duel.GetDecktopGroup(tp,1)

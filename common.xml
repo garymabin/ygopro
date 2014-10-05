@@ -1,17 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Common>
-  <setting name="image_path" value="../ygo/pics" type="string"/>
-  <setting name="image_size_x" value="177" type="integer"/>
-  <setting name="image_size_y" value="254" type="integer"/>
-  <setting name="tex_size_x" value="256" type="integer"/>
-  <setting name="tex_size_y" value="256" type="integer"/>
-  <setting name="image_count_x" value="1" type="integer"/>
-  <setting name="image_count_y" value="1" type="integer"/>
-  <setting name="screenshot_path" value="./screenshot" type="string"/>
-  <setting name="database" value="../ygo/cards.cdb" type="string"/>
-  <setting name="textures" value="./conf/textures.xml" type="string"/>
-  <setting name="limit_regulation" value="./conf/lflist.conf" type="string"/>
-  <setting name="deck_neturl" value="http://my-card.in/decks/new?name={name}{amp}cards={deck}" type="string"/>
-  <setting name="full_width_space" value="1" type="integer"/>
-  <setting name="hover_info_delay" value="300" type="integer"/>
+  <integer name="window_width" value="1024"/>
+  <integer name="window_height" value="640"/>
+  <integer name="vertical_sync" value="0"/>
+  <integer name="fsaa" value="0"/>
+  <integer name="frame_rate" value="60"/>
+  <integer name="card_size_x" value="100"/>
+  <integer name="card_size_y" value="145"/>
+  <integer name="tex_size_x" value="2048"/>
+  <integer name="tex_size_y" value="2048"/>
+  <string name="image_path" value="./images"/>
+  <string name="database_file" value="./conf/cards.cdb"/>
+  <string name="screenshot_path" value="./screenshot"/>
+  <string name="deck_path" value="./deck"/>
+  <string name="replay_path" value="./replay"/>
+  <string name="gui_conf" value="./conf/gui.xml"/>
+  <string name="string_conf" value="./conf/strings.xml"/>
+  <string name="textures_conf" value="./conf/textures.xml"/>
+  <string name="layout_conf" value="./conf/layout.xml"/>
+  <string name="limit_regulation" value="./conf/lflist.conf"/>
+  <string name="deck_neturl" value="http://my-card.in/decks/new?name={name}{amp}cards={deck}"/>
+  <integer name="hover_info_delay" value="300"/>
 </Common>

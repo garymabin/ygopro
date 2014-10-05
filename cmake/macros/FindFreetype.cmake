@@ -1,10 +1,10 @@
 # - Try to find the Lib library
 # Once done this will define
 #
-#  FREETYPE_FOUND - System has Libevent
-#  FREETYPE_INCLUDE_DIR - The Libevent include directory
-#  FREETYPE_LIBRARIES - The libraries needed to use Libevent
-#  FREETYPE_DEFINITIONS - Compiler switches required for using Libevent
+#  FREETYPE_FOUND - System has freetype
+#  FREETYPE_INCLUDE_DIR - The freetype include directory
+#  FREETYPE_LIBRARIES - The libraries needed to use freetype
+#  FREETYPE_DEFINITIONS - Compiler switches required for using freetype
 
 SET(FREETYPE_DEFINITIONS ${PC_FREETYPE_CFLAGS_OTHER})
 
@@ -12,7 +12,7 @@ FIND_PATH(FREETYPE_INCLUDE_DIR ft2build.h
    HINTS
    ${PC_FREETYPE_INCLUDEDIR}
    ${PC_FREETYPE_INCLUDE_DIRS}
-   PATH_SUFFIXES include
+   PATH_SUFFIXES freetype2
    PATHS
    ~/Library/Frameworks
    /Library/Frameworks

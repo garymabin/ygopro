@@ -28,7 +28,10 @@ public:
 	static int32 card_get_synchro_level(lua_State *L);
 	static int32 card_get_ritual_level(lua_State *L);
 	static int32 card_get_origin_level(lua_State *L);
+	static int32 card_get_origin_rank(lua_State *L);
 	static int32 card_is_xyz_level(lua_State *L);
+	static int32 card_get_lscale(lua_State *L);
+	static int32 card_get_rscale(lua_State *L);
 	static int32 card_get_attribute(lua_State *L);
 	static int32 card_get_origin_attribute(lua_State *L);
 	static int32 card_get_race(lua_State *L);
@@ -335,6 +338,7 @@ public:
 	static int32 duel_raise_single_event(lua_State *L);
 	static int32 duel_check_timing(lua_State *L);
 	static int32 duel_get_environment(lua_State *L);
+	static int32 duel_is_environment(lua_State *L);
 	
 	static int32 duel_win(lua_State *L);
 	static int32 duel_draw(lua_State *L);
@@ -422,7 +426,8 @@ public:
 	static int32 duel_set_operation_info(lua_State *L);
 	static int32 duel_get_operation_info(lua_State *L);
 	static int32 duel_get_operation_count(lua_State *L);
-	static int32 duel_get_xyz_material(lua_State *L);
+	static int32 duel_check_xyz_material(lua_State *L);
+	static int32 duel_select_xyz_material(lua_State *L);
 	static int32 duel_overlay(lua_State *L);
 	static int32 duel_get_overlay_group(lua_State *L);
 	static int32 duel_get_overlay_count(lua_State *L);
@@ -459,6 +464,9 @@ public:
 	static int32 duel_is_player_can_spsummon(lua_State *L);
 	static int32 duel_is_player_can_flipsummon(lua_State *L);
 	static int32 duel_is_player_can_spsummon_monster(lua_State *L);
+	static int32 duel_is_player_can_summon_count(lua_State *L);
+	static int32 duel_is_player_can_spsummon_count(lua_State *L);
+	static int32 duel_is_player_can_flipsummon_count(lua_State *L);
 	static int32 duel_is_player_can_release(lua_State *L);
 	static int32 duel_is_player_can_remove(lua_State *L);
 	static int32 duel_is_player_can_send_to_hand(lua_State *L);

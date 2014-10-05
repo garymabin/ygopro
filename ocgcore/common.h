@@ -64,6 +64,9 @@ struct card_data {
 #define LOCATION_EXTRA		0x40		//
 #define LOCATION_OVERLAY	0x80		//
 #define LOCATION_ONFIELD	0x0c		//
+#define LOCATION_FZONE		0x100		//
+#define LOCATION_PZONE		0x200		//
+
 //Positions
 #define POS_FACEUP_ATTACK		0x1
 #define POS_FACEDOWN_ATTACK		0x2
@@ -97,6 +100,7 @@ struct card_data {
 #define TYPE_FLIP			0x200000	//
 #define TYPE_TOON			0x400000	//
 #define TYPE_XYZ			0x800000	//
+#define TYPE_PENDULUM		0x1000000	//
 
 //Attributes
 #define ATTRIBUTE_EARTH		0x01		//
@@ -130,6 +134,7 @@ struct card_data {
 #define RACE_PSYCHO			0x100000	//
 #define RACE_DEVINE			0x200000	//
 #define RACE_CREATORGOD		0x400000	//
+#define RACE_PHANTOMDRAGON		0x800000	//
 //Reason
 #define REASON_DESTROY		0x1		//
 #define REASON_RELEASE		0x2		//
@@ -203,20 +208,24 @@ struct card_data {
 #define QUERY_TYPE			0x4
 #define QUERY_LEVEL			0x8
 #define QUERY_RANK			0x10
-#define QUERY_ATTRIBUTE		0x20
-#define QUERY_RACE			0x40
-#define QUERY_ATTACK		0x80
-#define QUERY_DEFENCE		0x100
-#define QUERY_BASE_ATTACK	0x200
-#define QUERY_BASE_DEFENCE	0x400
-#define QUERY_REASON		0x800
-#define QUERY_OWNER			0x1000
-#define QUERY_STATUS		0x2000
-#define QUERY_REASON_CARD	0x10000
-#define QUERY_EQUIP_CARD	0x20000
-#define QUERY_TARGET_CARD	0x40000
-#define QUERY_OVERLAY_CARD	0x80000
-#define QUERY_COUNTERS		0x100000
+#define QUERY_LSCALE		0x20
+#define QUERY_RSCALE		0x40
+#define QUERY_ATTRIBUTE		0x80
+#define QUERY_RACE			0x100
+#define QUERY_ATTACK		0x200
+#define QUERY_DEFENCE		0x400
+#define QUERY_BASE_ATTACK	0x800
+#define QUERY_BASE_DEFENCE	0x1000
+#define QUERY_LSCALE		0x2000
+#define QUERY_RSCALE		0x4000
+#define QUERY_REASON		0x10000
+#define QUERY_OWNER			0x20000
+#define QUERY_STATUS		0x40000
+#define QUERY_REASON_CARD	0x80000
+#define QUERY_EQUIP_CARD	0x100000
+#define QUERY_TARGET_CARD	0x200000
+#define QUERY_OVERLAY_CARD	0x400000
+#define QUERY_COUNTERS		0x800000
 
 //Messages
 #define MSG_RETRY				1
