@@ -4,25 +4,40 @@
 namespace ygopro
 {
     
+    struct FieldBlock;
+    struct FieldCard;
     class DuelScene;
     
-    struct DuelCommand {
+    class DuelCommand {
+    public:
         virtual bool Handle(DuelScene* pscene) = 0;
     };
     
-    struct DuelCommandWait : public DuelCommand {
+    class DuelCommandWait : public DuelCommand {
+    public:
         DuelCommandWait(double tm);
         virtual bool Handle(DuelScene* pscene);
-
+        
+    protected:
         double end_time;
     };
     
-    struct DuelCommandMove : public DuelCommand {
-        DuelCommandMove(unsigned int f, unsigned int t);
-        virtual bool Handle(DuelScene* pscene);
+    class DuelMessage : public DuelCommand {
+    public:
+        DuelMessage(unsigned char* data, unsigned int len) {
+            pdata = data;
+            length = len;
+        }
         
-        unsigned char from[4];
-        unsigned char to[4];
+    protected:
+        unsigned char* pdata;
+        int length;
+    };
+    
+    class DuelMessageMove : public DuelMessage {
+    public:
+        using DuelMessage::DuelMessage;
+        virtual bool Handle(DuelScene* pscene);
     };
 }
 
