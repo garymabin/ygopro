@@ -257,6 +257,7 @@ namespace ygopro
         return false;
     }
     
+
     bool BuildScene::LoadDeckFromString(const std::string& deck_string) {
         DeckData tempdeck;
         if(deck_string.find("ydk://") == 0 && tempdeck.LoadFromString(deck_string.substr(6))) {
@@ -293,6 +294,7 @@ namespace ygopro
             deckfile.append(L".ydk");
         current_deck.SaveToFile(deckfile);
         return true;
+
     }
     
     std::string BuildScene::SaveDeckToString() {

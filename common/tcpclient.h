@@ -8,6 +8,8 @@
 #include <event2/buffer.h>
 #include <event2/thread.h>
 
+#include <arpa/inet.h>
+
 #define TC_FLAG_EXTERNAL_BASE         0x1
 
 class TcpClient : public PacketStream {

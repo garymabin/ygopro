@@ -1,6 +1,8 @@
 #ifndef _DECK_DATA_H_
 #define _DECK_DATA_H_
 
+#include "../common/common.h"
+
 #define DECK_NOERROR        0
 #define DECK_EXCEED_COUNT   0x10000000
 #define DECK_POOL_MISMATCH  0x20000000

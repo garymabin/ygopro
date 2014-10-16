@@ -5,6 +5,7 @@
 
 class PacketReader;
 class PacketWriter;
+#include <string>
 
 class PacketStream {
 public:

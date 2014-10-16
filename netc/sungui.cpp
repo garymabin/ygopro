@@ -128,10 +128,13 @@ namespace sgui
     }
     
     bool SGWidget::EventMouseButtonDown(MouseButtonEvent evt) {
+#if defined _ANDROID
+#else
         auto dr = GetDragingTarget();
         if(dr && (evt.button == GLFW_MOUSE_BUTTON_LEFT)) {
             guiRoot.ObjectDragingBegin(dr, MouseMoveEvent{evt.x, evt.y});
         }
+#endif
         return eventMouseButtonDown.TriggerEvent(*this, evt);
     }
     
@@ -583,6 +586,8 @@ namespace sgui
     }
     
     bool SGWidgetContainer::EventMouseButtonDown(MouseButtonEvent evt) {
+#ifdef _ANDROID
+#else
         auto choving = hoving.lock();
         bool e = eventMouseButtonDown.TriggerEvent(*this, evt);
         if(choving) {
@@ -600,6 +605,7 @@ namespace sgui
                 guiRoot.ObjectDragingBegin(dr, MouseMoveEvent{evt.x, evt.y});
             return e;
         }
+#endif
     }
     
     bool SGWidgetContainer::EventMouseButtonUp(MouseButtonEvent evt) {
@@ -955,11 +961,14 @@ namespace sgui
     }
     
     bool SGGUIRoot::InjectMouseButtonUpEvent(MouseButtonEvent evt) {
+#if defined _ANDROID
+#else
         if(!draging_object.expired() && (evt.button == GLFW_MOUSE_BUTTON_LEFT))
             draging_object.lock()->DragingEnd(v2i{evt.x, evt.y});
         draging_object.reset();
         clicking_object.reset();
         return EventMouseButtonUp(evt);
+#endif
     }
     
     bool SGGUIRoot::InjectMouseWheelEvent(MouseWheelEvent evt) {
@@ -1730,6 +1739,8 @@ namespace sgui
     }
     
     bool SGButton::EventMouseButtonDown(MouseButtonEvent evt) {
+#if defined _ANDROID
+#else
         if(evt.button == GLFW_MOUSE_BUTTON_LEFT) {
             if(!is_push) {
                 state = 2;
@@ -1743,10 +1754,14 @@ namespace sgui
                 guiRoot.SetClickingObject(shared_from_this());
             }
         }
+#endif
         return SGWidget::EventMouseButtonDown(evt);
     }
     
     bool SGButton::EventMouseButtonUp(MouseButtonEvent evt) {
+#if defined _ANDROID
+    	return SGWidget::EventMouseButtonUp(evt);
+#else
         bool click = false;
         if(evt.button == GLFW_MOUSE_BUTTON_LEFT) {
             if(!is_push) {
@@ -1770,6 +1785,7 @@ namespace sgui
         if(click)
             eventButtonClick.TriggerEvent(*this);
         return ret;
+#endif
     }
     
     SGConfig SGCheckbox::checkbox_config;
@@ -1924,15 +1940,21 @@ namespace sgui
     }
     
     bool SGCheckbox::EventMouseButtonDown(MouseButtonEvent evt) {
+#if defined _ANDROID
+#else
         if(evt.button == GLFW_MOUSE_BUTTON_LEFT) {
             state = 2;
             vertices_dirty = true;
             guiRoot.SetClickingObject(shared_from_this());
         }
+#endif
         return SGWidget::EventMouseButtonDown(evt);
     }
     
     bool SGCheckbox::EventMouseButtonUp(MouseButtonEvent evt) {
+#if defined _ANDROID
+    	return SGWidget::EventMouseButtonUp(evt);
+#else
         bool click = false;
         if(state == 2 && evt.button == GLFW_MOUSE_BUTTON_LEFT) {
             vertices_dirty = true;
@@ -1944,6 +1966,7 @@ namespace sgui
         if(click)
             eventCheckChange.TriggerEvent(*this, checked);
         return ret;
+#endif
     }
     
     SGConfig SGRadio::radio_config;
@@ -2023,6 +2046,9 @@ namespace sgui
     }
     
     bool SGRadio::EventMouseButtonUp(MouseButtonEvent evt) {
+#ifdef _ANDROID
+    	SGWidget::EventMouseButtonUp(evt);
+#else
         bool click = false;
         if(state == 2 && evt.button == GLFW_MOUSE_BUTTON_LEFT) {
             vertices_dirty = true;
@@ -2034,6 +2060,7 @@ namespace sgui
         if(click)
             SetChecked(true);
         return ret;
+#endif
     }
     
     std::shared_ptr<SGRadio> SGRadio::Create(std::shared_ptr<SGWidgetContainer> p, v2i pos, const std::wstring& t) {
@@ -2648,6 +2675,8 @@ namespace sgui
     }
     
     bool SGTextEdit::EventKeyDown(KeyEvent evt) {
+#if defined _ANDROID
+#else
         if(read_only)
             return false;
         switch(evt.key) {
@@ -2766,6 +2795,7 @@ namespace sgui
             default:
                 break;
         }
+#endif
         return eventKeyDown.TriggerEvent(*this, evt);
     }
     
@@ -3074,6 +3104,9 @@ namespace sgui
     }
     
     bool SGListBox::EventMouseButtonDown(MouseButtonEvent evt) {
+#if defined _ANDROID
+    	return true;
+#else
         eventMouseButtonDown.TriggerEvent(*this, evt);
         auto choving = std::static_pointer_cast<SGScrollBar>(hoving.lock());
         if(choving) {
@@ -3100,6 +3133,7 @@ namespace sgui
             }
         }
         return true;
+#endif
     }
     
     bool SGListBox::EventMouseEnter() {
@@ -3187,6 +3221,9 @@ namespace sgui
         }
         
         virtual bool EventMouseButtonDown(MouseButtonEvent evt) {
+#if defined _ANDROID
+        	return true;
+#else
             auto choving = hoving.lock();
             if(choving) {
                 choving->EventMouseButtonDown(evt);
@@ -3202,6 +3239,7 @@ namespace sgui
                 }
             }
             return true;
+#endif
         }
         
         bool ScrollBarChange(SGWidget& sender, float value) {
@@ -3426,8 +3464,11 @@ namespace sgui
     }
     
     bool SGComboBox::EventMouseButtonDown(MouseButtonEvent evt) {
+#if defined _ANDROID
+#else
         if(evt.button == GLFW_MOUSE_BUTTON_LEFT)
             ShowList(!show_item);
+#endif
         return SGWidget::EventMouseButtonDown(evt);
     }
     
@@ -3857,6 +3898,9 @@ namespace sgui
     }
     
     bool SGTabControl::EventMouseButtonDown(MouseButtonEvent evt) {
+#if defined _ANDROID
+    	return false;
+#else
         if(!in_tab) {
             if(evt.button == GLFW_MOUSE_BUTTON_LEFT) {
                 int ind = GetHovingTab(v2i{evt.x, evt.y});
@@ -3880,6 +3924,7 @@ namespace sgui
             if(!active_tab.expired())
                 return active_tab.lock()->EventMouseButtonDown(evt);
         return false;
+#endif
     }
     
     bool SGTabControl::EventMouseButtonUp(MouseButtonEvent evt) {

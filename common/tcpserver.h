@@ -9,6 +9,8 @@
 #include <event2/thread.h>
 #include <unordered_set>
 
+#include <arpa/inet.h>
+
 class TcpServer;
 
 class ClientConnection: public PacketStream {

@@ -13,12 +13,121 @@
 #include "ds/duel_network.h"
 #include "ds/duel_scene.h"
 
+#if defined _ANDROID
+#include <AndroidGlueCompat.h>
+#endif
+
 using namespace ygopro;
 
 static float xrate = 0.0f;
 static float yrate = 0.0f;
 static bool need_draw = true;
 
+#if defined _ANDROID
+void android_main(struct android_app* state) {
+	AndGameEngine engine;
+	init_android_world(state, engine);
+    if(!commonCfg.LoadConfig(L"common.xml"))
+        return 0;
+    int width = commonCfg["window_width"];
+    int height = commonCfg["window_height"];
+	int fsaa = commonCfg["fsaa"];
+    int vsync = commonCfg["vertical_sync"];
+
+//    std::cout << "GL Vendor    : " << glGetString(GL_VENDOR) << std::endl;
+//    std::cout << "GL Renderer  : " << glGetString(GL_RENDERER) << std::endl;
+//    std::cout << "GL Version (string)  : " << glGetString(GL_VERSION) << std::endl;
+//    std::cout << "GLSL Version : " << glGetString(GL_SHADING_LANGUAGE_VERSION) << std::endl;
+//    glGetError();
+
+    ImageMgr::Get().InitTextures(commonCfg["image_path"]);
+	if(!stringCfg.LoadConfig(commonCfg["string_conf"])
+			|| DataMgr::Get().LoadDatas(commonCfg["database_file"])
+			|| !ImageMgr::Get().LoadImageConfig(commonCfg["textures_conf"])
+			|| !sgui::SGGUIRoot::GetSingleton().LoadConfigs(commonCfg["gui_conf"])) {
+		engine_term_display(&engine);
+	}
+	LimitRegulationMgr::Get().LoadLimitRegulation(commonCfg["limit_regulation"], stringCfg["eui_list_default"]);
+	stringCfg.ForEach([](const std::string& name, ValueStruct& value) {
+				if(name.find("setname_") == 0 ) {
+					std::wstring setname = To<std::wstring>(name.substr(8));
+					DataMgr::Get().RegisterSetCode(static_cast<unsigned int>(value), setname);
+				}
+			});
+	SceneMgr::Get().Init(commonCfg["layout_conf"]);
+
+    xrate = (float)engine.width / width;
+    yrate = (float)engine.height / height;
+
+    sgui::SGGUIRoot::GetSingleton().SetSceneSize({engine.width, engine.height});
+    SceneMgr::Get().SetSceneSize({engine.width, engine.height});
+    SceneMgr::Get().InitDraw();
+    SceneMgr::Get().SetFrameRate((int)commonCfg["frame_rate"]);
+
+    //auto sc = std::make_shared<BuildScene>();
+    //SceneMgr::Get().SetScene(std::static_pointer_cast<Scene>(sc));
+    auto sc = std::make_shared<DuelScene>();
+    SceneMgr::Get().SetScene(std::static_pointer_cast<Scene>(sc));
+	while (1) {
+		// Read all pending events.
+		int ident;
+		int events;
+		struct android_poll_source* source;
+
+		// If not animating, we will block forever waiting for events.
+		// If animating, we loop until all events are read, then continue
+		// to draw the next frame of animation.
+		while ((ident = ALooper_pollAll(engine.animating ? 0 : -1, NULL,
+								&events, (void**) &source)) >= 0) {
+
+			// Process this event.
+			if (source != NULL) {
+				source->process(state, source);
+			}
+
+			// If a sensor has data, process it now.
+			if (ident == LOOPER_ID_USER) {
+				if (engine.accelerometerSensor != NULL) {
+					ASensorEvent event;
+					while (ASensorEventQueue_getEvents(
+									engine.sensorEventQueue, &event, 1) > 0) {
+						LOGI("accelerometer: x=%f y=%f z=%f",
+								event.acceleration.x, event.acceleration.y,
+								event.acceleration.z);
+					}
+				}
+			}
+
+			// Check if we are exiting.
+			if (state->destroyRequested != 0) {
+				break;
+			}
+		}
+
+		if (engine.animating) {
+			SceneMgr::Get().CheckFrameRate();
+			SceneMgr::Get().InitDraw();
+			auto& shader = glbase::Shader::GetDefaultShader();
+			shader.Use();
+			shader.SetParam1i("texID", 0);
+			if(!SceneMgr::Get().Update())
+				break;
+			shader.Unuse();
+			SceneMgr::Get().Draw();
+			sgui::SGGUIRoot::GetSingleton().Draw();
+
+			eglSwapBuffers(engine.display, engine.surface);
+		}
+	}
+
+    SceneMgr::Get().Uninit();
+    sgui::SGGUIRoot::GetSingleton().Unload();
+    ImageMgr::Get().UninitTextures();
+    glbase::Shader::GetDefaultShader().Unload();
+
+	engine_term_display(&engine);
+}
+#else
 int main(int argc, char* argv[]) {
     if(!glfwInit())
         return 0;
@@ -187,3 +296,4 @@ int main(int argc, char* argv[]) {
     glfwTerminate();
     return 0;
 }
+#endif

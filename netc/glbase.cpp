@@ -21,6 +21,7 @@ void GLCheckError(const std::string& file, int line) {
         case GL_INVALID_OPERATION:
             std::cerr << "Invalid operation at " << file << ":" << line << std::endl;
             break;
+#if not defined BUILD_WITH_GLES
         case GL_STACK_OVERFLOW:
             std::cerr << "Stack overflow at " << file << ":" << line << std::endl;
             break;
@@ -33,6 +34,7 @@ void GLCheckError(const std::string& file, int line) {
         case GL_TABLE_TOO_LARGE:
             std::cerr << "Table to large at " << file << ":" << line << std::endl;
             break;
+#endif
         default:
             std::cerr << "Unknown error #" << err << " at " << file << ":" << line << std::endl;
             break;

@@ -2,7 +2,9 @@
 #define _SUNGUI_H_
 
 #include "glbase.h"
+#if not defined _ANDROID
 #include <GLFW/glfw3.h>
+#endif
 
 namespace sgui
 {

@@ -1,6 +1,7 @@
 #ifndef _GLBASE_H_
 #define _GLBASE_H_
 
+#if not defined _ANDROID
 #define GLEW_STATIC
 #include <GL/glew.h>
 #ifdef __MACH__
@@ -10,12 +11,16 @@
 #include <GL/gl.h>
 #include <GL/glu.h>
 #endif
+#else
+#include <AndroidGLESCompat.h>
+#endif
 
 #define GLM_FORCE_RADIANS
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <glm/gtx/quaternion.hpp>
+
 
 #include <ft2build.h>
 #include FT_FREETYPE_H
