@@ -3,6 +3,7 @@
 #if defined _ANDROID
 
 #include "AndroidGLESCompat.h"
+#include "AndroidJNITools.h"
 
 
 #include <android_native_app_glue.h>
@@ -43,7 +44,7 @@ typedef struct engine {
     struct saved_state state;
 } AndGameEngine;
 
-extern void init_android_world(struct android_app* state, struct engine engine);
+extern void init_android_world(struct android_app* state, struct engine* engine);
 
 extern void engine_term_display(struct engine* engine);
 
@@ -51,4 +52,4 @@ extern struct android_app* mainApp;
 
 
 #endif /*_ANDROID*/
-#endif /*_ANDROID__GLUECOMPAT_*/
+#endif /*_ANDROID_GLUE_COMPAT_*/

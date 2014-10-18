@@ -4,5 +4,6 @@
     <string name="app_name">YGOPro</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="copy_res_failed_hint">拷贝资源失败</string>
 
 </resources>

@@ -16,7 +16,7 @@
 					<folderInfo id="com.android.toolchain.gcc.799007034.2144758303" name="/" resourcePath="">
 						<toolChain id="com.android.toolchain.gcc.792176801" name="Android GCC" superClass="com.android.toolchain.gcc" unusedChildren="com.android.gcc.compiler">
 							<targetPlatform binaryParser="org.eclipse.cdt.core.ELF" id="com.android.targetPlatform.92021513" isAbstract="false" superClass="com.android.targetPlatform"/>
-							<builder arguments="-j4" command="${NDK_ROOT}/ndk-build" enableAutoBuild="true" id="com.android.builder.2034087204" keepEnvironmentInBuildfile="false" managedBuildOn="false" name="Android Builder" superClass="com.android.builder"/>
+							<builder arguments="NDK_DEBUG=1 -j4" command="${NDK_ROOT}/ndk-build" enableAutoBuild="true" id="com.android.builder.2034087204" keepEnvironmentInBuildfile="false" managedBuildOn="false" name="Android Builder" superClass="com.android.builder"/>
 							<tool id="cdt.managedbuild.tool.gnu.c.compiler.base.1267935684" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.base">
 								<option id="gnu.c.compiler.option.include.paths.1242540761" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${NDK_ROOT}/platforms/android-19/arch-arm/usr/include&quot;"/>

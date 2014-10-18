@@ -4,6 +4,8 @@
 
 #include <EGL/egl.h>
 #include <EGL/eglext.h>
+#include <GLES/gl.h>
+#include <GLES/glplatform.h>
 #include <GLES2/gl2ext.h>
 #include <GLES2/gl2.h>
 

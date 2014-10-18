@@ -25,10 +25,12 @@ static bool need_draw = true;
 
 #if defined _ANDROID
 void android_main(struct android_app* state) {
+	LOGI("android_main:");
 	AndGameEngine engine;
-	init_android_world(state, engine);
+	init_android_world(state, &engine);
+	LOGI("after init engine:");
     if(!commonCfg.LoadConfig(L"common.xml"))
-        return 0;
+        return;
     int width = commonCfg["window_width"];
     int height = commonCfg["window_height"];
 	int fsaa = commonCfg["fsaa"];
@@ -39,13 +41,13 @@ void android_main(struct android_app* state) {
 //    std::cout << "GL Version (string)  : " << glGetString(GL_VERSION) << std::endl;
 //    std::cout << "GLSL Version : " << glGetString(GL_SHADING_LANGUAGE_VERSION) << std::endl;
 //    glGetError();
-
-    ImageMgr::Get().InitTextures(commonCfg["image_path"]);
+	ImageMgr::Get().InitTextures(commonCfg["image_path"]);
 	if(!stringCfg.LoadConfig(commonCfg["string_conf"])
 			|| DataMgr::Get().LoadDatas(commonCfg["database_file"])
 			|| !ImageMgr::Get().LoadImageConfig(commonCfg["textures_conf"])
 			|| !sgui::SGGUIRoot::GetSingleton().LoadConfigs(commonCfg["gui_conf"])) {
-		engine_term_display(&engine);
+		LOGI("failed init configs:");
+		return;
 	}
 	LimitRegulationMgr::Get().LoadLimitRegulation(commonCfg["limit_regulation"], stringCfg["eui_list_default"]);
 	stringCfg.ForEach([](const std::string& name, ValueStruct& value) {
@@ -54,6 +56,7 @@ void android_main(struct android_app* state) {
 					DataMgr::Get().RegisterSetCode(static_cast<unsigned int>(value), setname);
 				}
 			});
+	LOGI("begin init SceneMgr:");
 	SceneMgr::Get().Init(commonCfg["layout_conf"]);
 
     xrate = (float)engine.width / width;
@@ -68,6 +71,7 @@ void android_main(struct android_app* state) {
     //SceneMgr::Get().SetScene(std::static_pointer_cast<Scene>(sc));
     auto sc = std::make_shared<DuelScene>();
     SceneMgr::Get().SetScene(std::static_pointer_cast<Scene>(sc));
+    LOGI("before main loop:");
 	while (1) {
 		// Read all pending events.
 		int ident;
@@ -77,7 +81,7 @@ void android_main(struct android_app* state) {
 		// If not animating, we will block forever waiting for events.
 		// If animating, we loop until all events are read, then continue
 		// to draw the next frame of animation.
-		while ((ident = ALooper_pollAll(engine.animating ? 0 : -1, NULL,
+		while ((ident = ALooper_pollAll(0, NULL,
 								&events, (void**) &source)) >= 0) {
 
 			// Process this event.
@@ -91,9 +95,6 @@ void android_main(struct android_app* state) {
 					ASensorEvent event;
 					while (ASensorEventQueue_getEvents(
 									engine.sensorEventQueue, &event, 1) > 0) {
-						LOGI("accelerometer: x=%f y=%f z=%f",
-								event.acceleration.x, event.acceleration.y,
-								event.acceleration.z);
 					}
 				}
 			}
@@ -103,7 +104,6 @@ void android_main(struct android_app* state) {
 				break;
 			}
 		}
-
 		if (engine.animating) {
 			SceneMgr::Get().CheckFrameRate();
 			SceneMgr::Get().InitDraw();

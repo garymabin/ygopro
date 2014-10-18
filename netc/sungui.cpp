@@ -5,6 +5,10 @@
 
 #include "sungui.h"
 
+#if defined _ANDROID
+#include <AndroidGlueCompat.h>
+#endif
+
 namespace sgui
 {
     
@@ -859,11 +863,15 @@ namespace sgui
             subtype_node = subtype_node->next_sibling();
         }
         
-        if(font_mgr.find("default") == font_mgr.end())
+        if(font_mgr.find("default") == font_mgr.end()) {
+        	LOGI("load font failed");
             return false;
+        }
         glbase::Image img;
-        if(!img.LoadFile(basic_config.string_config["gui_texture"]))
+        if(!img.LoadFile(basic_config.string_config["gui_texture"])) {
+        	LOGI("load gui_texture failed");
             return false;
+        }
         gui_texture.Load(img.GetRawData(), img.GetWidth(), img.GetHeight());
         tex_size = v2i{gui_texture.GetWidth(), gui_texture.GetHeight()};
         glGenBuffers(1, &index_buffer);

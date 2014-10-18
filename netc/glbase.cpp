@@ -6,6 +6,10 @@
 
 #include "glbase.h"
 
+#if defined _ANDROID
+#include <AndroidGlueCompat.h>
+#endif
+
 #ifdef _DEBUG
 void GLCheckError(const std::string& file, int line) {
     auto err = glGetError();
@@ -13,13 +17,25 @@ void GLCheckError(const std::string& file, int line) {
         case GL_NO_ERROR:
             break;
         case GL_INVALID_ENUM:
-            std::cerr << "Invalid enum at " << file << ":" << line << std::endl;
+#ifdef _ANDROID
+        	LOGW("Invalid enum at %s:%d", file.c_str(), line);
+#else
+            std::cout << "Invalid enum at " << file << ":" << line << std::endl;
+#endif
             break;
         case GL_INVALID_VALUE:
-            std::cerr << "Invalid value at " << file << ":" << line << std::endl;
+#ifdef _ANDROID
+        	LOGW("Invalid value at %s:%d", file.c_str(), line);
+#else
+            std::cout << "Invalid value at " << file << ":" << line << std::endl;
+#endif
             break;
         case GL_INVALID_OPERATION:
-            std::cerr << "Invalid operation at " << file << ":" << line << std::endl;
+#ifdef _ANDROID
+        	LOGW("Invalid operation at %s:%d", file.c_str(), line);
+#else
+            std::cout << "Invalid operation at " << file << ":" << line << std::endl;
+#endif
             break;
 #if not defined BUILD_WITH_GLES
         case GL_STACK_OVERFLOW:
@@ -36,7 +52,11 @@ void GLCheckError(const std::string& file, int line) {
             break;
 #endif
         default:
-            std::cerr << "Unknown error #" << err << " at " << file << ":" << line << std::endl;
+#ifdef _ANDROID
+        	LOGW("Unknown error # %d at %s:%d", err,  file.c_str(), line);
+#else
+        	std::cout << "Unknown error #" << err << " at " << file << ":" << line << std::endl;
+#endif
             break;
     }
 }
@@ -109,14 +129,22 @@ namespace glbase {
         int result;
         glGetProgramiv(program, GL_LINK_STATUS, &result);
         if(result == GL_FALSE) {
+#ifdef _ANDROID
+        	LOGI("Failed to link shader program!\n");
+#else
             std::cerr << "Failed to link shader program!\n" << std::endl;
+#endif
             GLint logLen;
             glGetProgramiv(program, GL_INFO_LOG_LENGTH, &logLen);
             if(logLen > 0) {
                 char* log = new char[logLen];
                 GLsizei written;
                 glGetProgramInfoLog(program, logLen, &written, log);
+#ifdef _ANDROID
+                LOGI("Program log: %s", log);
+#else
                 std::cerr << "Program log: " << log << std::endl;
+#endif
                 delete[] log;
             }
             glDeleteProgram(program);
@@ -162,12 +190,12 @@ namespace glbase {
         static Shader default_shader;
         static bool inited = false;
         static const char* vert_shader = "\
-        #version 330\n\
-        layout (location = 0) in vec2 v_position;\n\
-        layout (location = 1) in vec4 v_color;\n\
-        layout (location = 2) in vec2 v_texcoord;\n\
-        out vec4 color;\n\
-        out vec2 texcoord;\n\
+        #version 120\n\
+        attribute vec2 v_position;\n\
+        attribute vec4 v_color;\n\
+        attribute vec2 v_texcoord;\n\
+        varying vec4 color;\n\
+        varying vec2 texcoord;\n\
         void main() {\n\
         color = v_color;\n\
         texcoord = v_texcoord;\n\
@@ -175,14 +203,13 @@ namespace glbase {
         }\n\
         ";
         static const char* frag_shader = "\
-        #version 330\n\
-        in vec4 color;\n\
-        in vec2 texcoord;\n\
-        layout (location = 0) out vec4 frag_color;\n\
+        #version 120\n\
+        varying vec4 color;\n\
+        varying vec2 texcoord;\n\
         uniform sampler2D texid;\n\
         void main() {\n\
-        vec4 texcolor = texture(texid, texcoord);\n\
-        frag_color = texcolor * color;\n\
+        vec4 texcolor = texture2D(texid, texcoord);\n\
+        gl_FragColor = texcolor * color;\n\
         }\n\
         ";
         if(!inited) {
