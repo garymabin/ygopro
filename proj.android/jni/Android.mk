@@ -6,6 +6,8 @@ LOCAL_MODULE    := YGOPro
 COMPAT_FILES := $(wildcard $(LOCAL_PATH)/android/*.cpp)
 BUILDIN_C_FILES := $(wildcard $(LOCAL_PATH)/../buildin/*.c)
 NETC_SRC_FILES := $(wildcard $(LOCAL_PATH)/../netc/*.cpp)
+NETC_SRC_FILES += $(wildcard $(LOCAL_PATH)/../netc/bs/*.cpp)
+NETC_SRC_FILES += $(wildcard $(LOCAL_PATH)/../netc/ds/*.cpp)
 NETS_SRC_FILES := $(wildcard $(LOCAL_PATH)/../nets/*.cpp)
 COMMON_SRC_FILES := $(wildcard $(LOCAL_PATH)/../common/*.cpp)
 #GS_SRC_FILES := $(wildcard $(LOCAL_PATH)/../gs/*.cpp)
@@ -45,8 +47,8 @@ LOCAL_STATIC_LIBRARIES := android_native_app_glue
 LOCAL_STATIC_LIBRARIES += libssl_static
 LOCAL_STATIC_LIBRARIES += libcrypto_static
 LOCAL_STATIC_LIBRARIES += libevent2
+LOCAL_STATIC_LIBRARIES += libocgcore_static
 LOCAL_STATIC_LIBRARIES += liblua5.2
-#LOCAL_STATIC_LIBRARIES += libocgcore_static
 LOCAL_STATIC_LIBRARIES += sqlite3
 LOCAL_STATIC_LIBRARIES += libft2
 
@@ -57,7 +59,7 @@ $(call import-add-path,$(LOCAL_PATH)/../)
 $(call import-module,openssl)
 $(call import-module,libevent)
 $(call import-module,sqlite3)
-#$(call import-module,ocgcore)
+$(call import-module,ocgcore)
 $(call import-module,lua)
 $(call import-module,freetype)
 $(call import-module,android/native_app_glue)

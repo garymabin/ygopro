@@ -150,6 +150,7 @@ namespace ygopro
     }
     
     void BuildSceneHandler::OnMenuDeck(int id) {
+#if not defined _ANDROID
         switch(id) {
             case 0:
                 file_dialog->Show(stringCfg["eui_msg_deck_load"], commonCfg["deck_path"], L".ydk");
@@ -206,6 +207,7 @@ namespace ygopro
             default:
                 break;
         }
+#endif
     }
     
     void BuildSceneHandler::OnMenuTool(int id) {

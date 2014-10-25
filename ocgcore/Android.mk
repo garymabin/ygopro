@@ -24,7 +24,7 @@ LOCAL_SRC_FILES := card.cpp \
                    scriptlib.cpp
                    
 LOCAL_CFLAGS    := -frtti -std=gnu++0x -D_IRR_ANDROID_PLATFORM_
-LOCAL_C_INCLUDES += $(LOCAL_PATH)/../proj.android/depends/lua
+LOCAL_C_INCLUDES += $(LOCAL_PATH)/../depends/lua
 
 include $(BUILD_STATIC_LIBRARY)
 

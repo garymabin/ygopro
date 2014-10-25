@@ -18,6 +18,7 @@ namespace ygopro
     }
     
     bool BuildInputHandler::UpdateInput() {
+#if not defined _ANDROID
         if(show_info_begin) {
             auto pscene = build_scene.lock();
             double now = SceneMgr::Get().GetGameTime();
@@ -42,6 +43,7 @@ namespace ygopro
                 });
             }
         }
+#endif
         return true;
     }
     
@@ -74,14 +76,17 @@ namespace ygopro
     }
     
     void BuildInputHandler::MouseButtonDown(sgui::MouseButtonEvent evt) {
+#if not defined _ANDROID
         click_pos = hover_pos;
         if(evt.button == GLFW_MOUSE_BUTTON_LEFT) {
             show_info_begin = true;
             show_info_time = SceneMgr::Get().GetGameTime();
         }
+#endif
     }
     
     void BuildInputHandler::MouseButtonUp(sgui::MouseButtonEvent evt) {
+#if not defined _ANDROID
         if(evt.button == GLFW_MOUSE_BUTTON_LEFT)
             show_info_begin = false;
         if(hover_pos != click_pos)
@@ -101,6 +106,7 @@ namespace ygopro
         } else if(pos == 4) {
             pscene->InsertSearchResult(index, evt.button != GLFW_MOUSE_BUTTON_LEFT);
         }
+#endif
     }
     
     void BuildInputHandler::MouseWheel(sgui::MouseWheelEvent evt) {
@@ -108,6 +114,7 @@ namespace ygopro
     }
     
     void BuildInputHandler::KeyDown(sgui::KeyEvent evt) {
+#if not defined _ANDROID
         auto pscene = build_scene.lock();
         switch(evt.key) {
             case GLFW_KEY_1:
@@ -148,6 +155,7 @@ namespace ygopro
             default:
                 break;
         }
+#endif
     }
     
     void BuildInputHandler::KeyUp(sgui::KeyEvent evt) {
