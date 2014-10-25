@@ -5,10 +5,6 @@
 
 #include "sungui.h"
 
-#if defined _ANDROID
-#include <AndroidGlueCompat.h>
-#endif
-
 namespace sgui
 {
     
@@ -774,8 +770,12 @@ namespace sgui
     
     void SGGUIRoot::Draw() {
         glEnable(GL_BLEND);
+        GLCheckError(__FILE__, __LINE__);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        GLCheckError(__FILE__, __LINE__);
         glDisable(GL_DEPTH_TEST);
+        GLCheckError(__FILE__, __LINE__);
+        LOGI("begin use gui_shader");
         gui_shader->Use();
         gui_shader->SetParam1i("texID", 0);
         for(auto& iter : children)
@@ -801,6 +801,7 @@ namespace sgui
     }
     
     bool SGGUIRoot::LoadConfigs(const std::wstring& gui_conf) {
+    	LOGI("LoadConfigs");
         AddConfig("basic", SGGUIRoot::basic_config);
         AddConfig("panel", SGPanel::panel_config);
         AddConfig("window", SGWindow::window_config);
@@ -847,6 +848,7 @@ namespace sgui
                         attr = attr->next_attribute();
                         int h = To<int>(attr->value());
                         iter->second->tex_config[name] = recti{u, v, w, h};
+                        LOGI("gui rect : u = %d, v = %d, w = %d, h = %d", u, v, w, h);
                     } else if(config_name == "font") {
                         std::string name = attr->value();
                         attr = attr->next_attribute();

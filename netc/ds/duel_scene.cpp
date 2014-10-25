@@ -172,11 +172,17 @@ namespace ygopro
     
     DuelScene::DuelScene() {
         glGenBuffers(1, &index_buffer);
+        LOGI("index_buffer ? = %d, index_buffer = %x", glIsBuffer(index_buffer), index_buffer);
         glGenBuffers(1, &card_index_buffer);
+        LOGI("card_index_buffer ? = %d, card_index_buffer = %x", glIsBuffer(card_index_buffer), card_index_buffer);
         glGenBuffers(1, &back_buffer);
+        LOGI("back_buffer ? = %d, back_buffer = %x", glIsBuffer(back_buffer), back_buffer);
         glGenBuffers(1, &field_buffer);
+        LOGI("field_buffer ? = %d, field_buffer = %x", glIsBuffer(field_buffer), field_buffer);
         glGenBuffers(1, &card_buffer);
+        LOGI("card_buffer ? = %d, card_buffer = %x", glIsBuffer(card_buffer), card_buffer);
         glGenBuffers(1, &misc_buffer);
+        LOGI("misc_buffer ? = %d, misc_buffer = %x", glIsBuffer(misc_buffer), misc_buffer);
         GLCheckError(__FILE__, __LINE__);
         glBindBuffer(GL_ARRAY_BUFFER, back_buffer);
         glBufferData(GL_ARRAY_BUFFER, sizeof(glbase::v3hct) * 4, nullptr, GL_DYNAMIC_DRAW);
@@ -237,6 +243,11 @@ namespace ygopro
         TextFile fragf("./conf/frag.shader");
         duel_shader.LoadVertShader(vertf.Data());
         duel_shader.LoadFragShader(fragf.Data());
+        duel_shader.CreateAttachShader();
+        duel_shader.BindAttribLocation(0, "v_position");
+        duel_shader.BindAttribLocation(1, "v_color");
+        duel_shader.BindAttribLocation(2, "v_hcolor");
+        duel_shader.BindAttribLocation(3, "v_texcoord");
         duel_shader.Link();
         InitField();
         glBindBuffer(GL_ARRAY_BUFFER, field_buffer);
@@ -394,6 +405,7 @@ namespace ygopro
         verts[3].vertex = {1.0f, -1.0f, 0.0f};
         verts[3].texcoord = ti.vert[3];
         glBindBuffer(GL_ARRAY_BUFFER, back_buffer);
+        GLCheckError(__FILE__, __LINE__);
         glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(glbase::v3hct) * verts.size(), &verts[0]);
         GLCheckError(__FILE__, __LINE__);
     }
@@ -432,6 +444,7 @@ namespace ygopro
     void DuelScene::UpdateField() {
         double tm = SceneMgr::Get().GetGameTime();
         glBindBuffer(GL_ARRAY_BUFFER, field_buffer);
+        GLCheckError(__FILE__, __LINE__);
         for(auto iter = updating_blocks.begin(); iter != updating_blocks.end();) {
             auto cur = iter++;
             auto ptr = (*cur).lock();

@@ -1,41 +1,87 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?fileVersion 4.0.0?>
-
-<cproject storage_type_id="org.eclipse.cdt.core.XmlProjectDescriptionStorage">
+<?fileVersion 4.0.0?><cproject storage_type_id="org.eclipse.cdt.core.XmlProjectDescriptionStorage">
 	<storageModule moduleId="org.eclipse.cdt.core.settings">
 		<cconfiguration id="com.android.toolchain.gcc.799007034">
 			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="com.android.toolchain.gcc.799007034" moduleId="org.eclipse.cdt.core.settings" name="Default">
 				<externalSettings/>
 				<extensions>
-					<extension id="org.eclipse.cdt.core.ELF" point="org.eclipse.cdt.core.BinaryParser"/>
 					<extension id="org.eclipse.cdt.core.GCCErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GmakeErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.CWDLocator" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GASErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GLDErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.ELF" point="org.eclipse.cdt.core.BinaryParser"/>
 				</extensions>
 			</storageModule>
 			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
 				<configuration artifactName="${ProjName}" buildProperties="" description="" id="com.android.toolchain.gcc.799007034" name="Default" parent="org.eclipse.cdt.build.core.emptycfg">
 					<folderInfo id="com.android.toolchain.gcc.799007034.2144758303" name="/" resourcePath="">
-						<toolChain id="com.android.toolchain.gcc.792176801" name="Android GCC" superClass="com.android.toolchain.gcc" unusedChildren="com.android.gcc.compiler">
-							<targetPlatform binaryParser="org.eclipse.cdt.core.ELF" id="com.android.targetPlatform.92021513" isAbstract="false" superClass="com.android.targetPlatform"/>
-							<builder arguments="NDK_DEBUG=1 -j4" command="${NDK_ROOT}/ndk-build" enableAutoBuild="true" id="com.android.builder.2034087204" keepEnvironmentInBuildfile="false" managedBuildOn="false" name="Android Builder" superClass="com.android.builder"/>
-							<tool id="cdt.managedbuild.tool.gnu.c.compiler.base.1267935684" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.base">
-								<option id="gnu.c.compiler.option.include.paths.1242540761" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" valueType="includePath">
-									<listOptionValue builtIn="false" value="&quot;${NDK_ROOT}/platforms/android-19/arch-arm/usr/include&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:${ProjDirPath}/depends/android}&quot;"/>
+						<toolChain id="cdt.managedbuild.toolchain.gnu.cross.base.324744417" name="Cross GCC" superClass="cdt.managedbuild.toolchain.gnu.cross.base">
+							<option id="cdt.managedbuild.option.gnu.cross.prefix.1140772513" name="Prefix" superClass="cdt.managedbuild.option.gnu.cross.prefix"/>
+							<option id="cdt.managedbuild.option.gnu.cross.path.1915089641" name="Path" superClass="cdt.managedbuild.option.gnu.cross.path"/>
+							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.ELF" id="cdt.managedbuild.targetPlatform.gnu.cross.1619170480" isAbstract="false" osList="all" superClass="cdt.managedbuild.targetPlatform.gnu.cross"/>
+							<builder arguments="${ProjDirPath}/build_native.sh NDK_DEBUG=1" command="bash" enableAutoBuild="true" id="cdt.managedbuild.builder.gnu.cross.761917705" keepEnvironmentInBuildfile="false" managedBuildOn="false" name="Gnu Make Builder" superClass="cdt.managedbuild.builder.gnu.cross"/>
+							<tool id="cdt.managedbuild.tool.gnu.cross.c.compiler.1699228054" name="Cross GCC Compiler" superClass="cdt.managedbuild.tool.gnu.cross.c.compiler">
+								<option id="gnu.c.compiler.option.include.paths.1786203424" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" useByScannerDiscovery="false" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${NDK_ROOT}/sources/android/native_app_glue&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${NDK_ROOT}/sources/cxx-stl/gnu-libstdc++/4.8/include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${NDK_ROOT}/platforms/android-21/arch-arm/usr/include&quot;"/>
 								</option>
-								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.2016402451" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
+								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.1893990791" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
+							</tool>
+							<tool id="cdt.managedbuild.tool.gnu.cross.cpp.compiler.365685933" name="Cross G++ Compiler" superClass="cdt.managedbuild.tool.gnu.cross.cpp.compiler">
+								<option id="gnu.cpp.compiler.option.include.paths.2052245522" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" useByScannerDiscovery="false" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;${NDK_ROOT}/sources/android/native_app_glue&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${NDK_ROOT}/sources/cxx-stl/gnu-libstdc++/4.8/include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${NDK_ROOT}/platforms/android-21/arch-arm/usr/include&quot;"/>
+								</option>
+								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.1717953642" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
+							</tool>
+							<tool id="cdt.managedbuild.tool.gnu.cross.c.linker.2134666704" name="Cross GCC Linker" superClass="cdt.managedbuild.tool.gnu.cross.c.linker"/>
+							<tool id="cdt.managedbuild.tool.gnu.cross.cpp.linker.950166675" name="Cross G++ Linker" superClass="cdt.managedbuild.tool.gnu.cross.cpp.linker">
+								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.1536360382" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
+									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
+									<additionalInput kind="additionalinput" paths="$(LIBS)"/>
+								</inputType>
+							</tool>
+							<tool id="cdt.managedbuild.tool.gnu.cross.archiver.473153504" name="Cross GCC Archiver" superClass="cdt.managedbuild.tool.gnu.cross.archiver"/>
+							<tool id="cdt.managedbuild.tool.gnu.cross.assembler.367750108" name="Cross GCC Assembler" superClass="cdt.managedbuild.tool.gnu.cross.assembler">
+								<option id="gnu.both.asm.option.include.paths.456245778" name="Include paths (-I)" superClass="gnu.both.asm.option.include.paths" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;${NDK_ROOT}/sources/android/native_app_glue&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${NDK_ROOT}/sources/android/cxx-stl/gnu-libstdc++/4.8/include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${NDK_ROOT}/sources/platforms/android-21/arch-arm/usr/include&quot;"/>
+								</option>
+								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.189581737" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
+							</tool>
+						</toolChain>
+					</folderInfo>
+					<folderInfo id="com.android.toolchain.gcc.799007034.512281178" name="/" resourcePath="depends">
+						<toolChain id="cdt.managedbuild.toolchain.gnu.cross.base.2132746612" name="Cross GCC" superClass="cdt.managedbuild.toolchain.gnu.cross.base" unusedChildren="">
+							<option id="cdt.managedbuild.option.gnu.cross.prefix.1140772513.1204021659" name="Prefix" superClass="cdt.managedbuild.option.gnu.cross.prefix.1140772513"/>
+							<option id="cdt.managedbuild.option.gnu.cross.path.1915089641.481574351" name="Path" superClass="cdt.managedbuild.option.gnu.cross.path.1915089641"/>
+							<tool id="cdt.managedbuild.tool.gnu.cross.c.compiler.511959632" name="Cross GCC Compiler" superClass="cdt.managedbuild.tool.gnu.cross.c.compiler.1699228054">
+								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.149363678" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
+							</tool>
+							<tool id="cdt.managedbuild.tool.gnu.cross.cpp.compiler.764883935" name="Cross G++ Compiler" superClass="cdt.managedbuild.tool.gnu.cross.cpp.compiler.365685933">
+								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.365844677" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
+							</tool>
+							<tool id="cdt.managedbuild.tool.gnu.cross.c.linker.695261034" name="Cross GCC Linker" superClass="cdt.managedbuild.tool.gnu.cross.c.linker.2134666704"/>
+							<tool id="cdt.managedbuild.tool.gnu.cross.cpp.linker.2004805919" name="Cross G++ Linker" superClass="cdt.managedbuild.tool.gnu.cross.cpp.linker.950166675"/>
+							<tool id="cdt.managedbuild.tool.gnu.cross.archiver.1390054982" name="Cross GCC Archiver" superClass="cdt.managedbuild.tool.gnu.cross.archiver.473153504"/>
+							<tool id="cdt.managedbuild.tool.gnu.cross.assembler.43138383" name="Cross GCC Assembler" superClass="cdt.managedbuild.tool.gnu.cross.assembler.367750108">
+								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.113534585" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
 							</tool>
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="netc"/>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="buildin"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="common"/>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="depends"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="gs"/>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="jni"/>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="netc"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="nets"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="ocgcore"/>
-						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="jni"/>
-						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="buildin"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -46,9 +92,12 @@
 		<project id="YGOPro.null.448079295" name="YGOPro"/>
 	</storageModule>
 	<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
-	<storageModule moduleId="refreshScope" versionNumber="1">
-		<resource resourceType="PROJECT" workspacePath="/YGOPro"/>
+	<storageModule moduleId="refreshScope" versionNumber="2">
+		<configuration configurationName="Default">
+			<resource resourceType="PROJECT" workspacePath="/YGOPro"/>
+		</configuration>
 	</storageModule>
+	<storageModule moduleId="org.eclipse.cdt.core.LanguageSettingsProviders"/>
 	<storageModule moduleId="scannerConfiguration">
 		<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
 		<scannerConfigBuildInfo instanceId="com.android.toolchain.gcc.799007034;com.android.toolchain.gcc.799007034.2144758303;cdt.managedbuild.tool.gnu.c.compiler.base.1267935684;cdt.managedbuild.tool.gnu.c.compiler.input.2016402451">
@@ -56,6 +105,18 @@
 		</scannerConfigBuildInfo>
 		<scannerConfigBuildInfo instanceId="com.android.toolchain.gcc.799007034;com.android.toolchain.gcc.799007034.2144758303;cdt.managedbuild.tool.gnu.cpp.compiler.base.773361238;cdt.managedbuild.tool.gnu.cpp.compiler.input.1108882845">
 			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.managedbuilder.core.GCCManagedMakePerProjectProfileCPP"/>
+		</scannerConfigBuildInfo>
+		<scannerConfigBuildInfo instanceId="com.android.toolchain.gcc.799007034;com.android.toolchain.gcc.799007034.2144758303;cdt.managedbuild.tool.gnu.cross.c.compiler.1699228054;cdt.managedbuild.tool.gnu.c.compiler.input.1893990791">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
+		</scannerConfigBuildInfo>
+		<scannerConfigBuildInfo instanceId="com.android.toolchain.gcc.799007034;com.android.toolchain.gcc.799007034.2091274506;com.android.gcc.compiler.2104332995;com.android.gcc.inputType.333548550">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="com.android.AndroidPerProjectProfile"/>
+		</scannerConfigBuildInfo>
+		<scannerConfigBuildInfo instanceId="com.android.toolchain.gcc.799007034;com.android.toolchain.gcc.799007034.2144758303;cdt.managedbuild.tool.gnu.cross.cpp.compiler.365685933;cdt.managedbuild.tool.gnu.cpp.compiler.input.1717953642">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
+		</scannerConfigBuildInfo>
+		<scannerConfigBuildInfo instanceId="com.android.toolchain.gcc.799007034;com.android.toolchain.gcc.799007034.2144758303;cdt.managedbuild.tool.gnu.c.compiler.base.613738184;cdt.managedbuild.tool.gnu.c.compiler.input.252991589">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.managedbuilder.core.GCCManagedMakePerProjectProfileC"/>
 		</scannerConfigBuildInfo>
 		<scannerConfigBuildInfo instanceId="com.android.toolchain.gcc.799007034;com.android.toolchain.gcc.799007034.1256796832;cdt.managedbuild.tool.gnu.c.compiler.base.522518902;cdt.managedbuild.tool.gnu.c.compiler.input.1421715376">
 			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.managedbuilder.core.GCCManagedMakePerProjectProfileC"/>
@@ -66,20 +127,14 @@
 		<scannerConfigBuildInfo instanceId="com.android.toolchain.gcc.799007034;com.android.toolchain.gcc.799007034.1008818326;com.android.gcc.compiler.1724930689;com.android.gcc.inputType.258734865">
 			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="com.android.AndroidPerProjectProfile"/>
 		</scannerConfigBuildInfo>
-		<scannerConfigBuildInfo instanceId="com.android.toolchain.gcc.799007034;com.android.toolchain.gcc.799007034.2091274506;com.android.gcc.compiler.2104332995;com.android.gcc.inputType.333548550">
+		<scannerConfigBuildInfo instanceId="com.android.toolchain.gcc.799007034;com.android.toolchain.gcc.799007034.2144758303;com.android.gcc.compiler.680677282;com.android.gcc.inputType.109217564">
 			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="com.android.AndroidPerProjectProfile"/>
 		</scannerConfigBuildInfo>
-		<scannerConfigBuildInfo instanceId="com.android.toolchain.gcc.799007034;com.android.toolchain.gcc.799007034.2144758303;com.android.gcc.compiler.680677282;com.android.gcc.inputType.109217564">
+		<scannerConfigBuildInfo instanceId="com.android.toolchain.gcc.799007034;com.android.toolchain.gcc.799007034.2144758303;com.android.gcc.compiler.1686161818;com.android.gcc.inputType.1333918804">
 			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="com.android.AndroidPerProjectProfile"/>
 		</scannerConfigBuildInfo>
 		<scannerConfigBuildInfo instanceId="com.android.toolchain.gcc.799007034;com.android.toolchain.gcc.799007034.1256796832;cdt.managedbuild.tool.gnu.cpp.compiler.base.1693276209;cdt.managedbuild.tool.gnu.cpp.compiler.input.1547870770">
 			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.managedbuilder.core.GCCManagedMakePerProjectProfileCPP"/>
-		</scannerConfigBuildInfo>
-		<scannerConfigBuildInfo instanceId="com.android.toolchain.gcc.799007034;com.android.toolchain.gcc.799007034.2144758303;cdt.managedbuild.tool.gnu.c.compiler.base.613738184;cdt.managedbuild.tool.gnu.c.compiler.input.252991589">
-			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.managedbuilder.core.GCCManagedMakePerProjectProfileC"/>
-		</scannerConfigBuildInfo>
-		<scannerConfigBuildInfo instanceId="com.android.toolchain.gcc.799007034;com.android.toolchain.gcc.799007034.2144758303;com.android.gcc.compiler.1686161818;com.android.gcc.inputType.1333918804">
-			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="com.android.AndroidPerProjectProfile"/>
 		</scannerConfigBuildInfo>
 		<scannerConfigBuildInfo instanceId="com.android.toolchain.gcc.799007034;com.android.toolchain.gcc.799007034.2144758303;cdt.managedbuild.tool.gnu.cpp.compiler.base.1365603889;cdt.managedbuild.tool.gnu.cpp.compiler.input.439236916">
 			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.managedbuilder.core.GCCManagedMakePerProjectProfileCPP"/>

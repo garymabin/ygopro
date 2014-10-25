@@ -80,14 +80,22 @@ namespace glbase {
         int result;
         glGetShaderiv(vert_shader, GL_COMPILE_STATUS, &result);
         if(result == GL_FALSE) {
+#ifdef _ANDROID
+        	LOGI("Vertex shader compilation failed!");
+#else
             std::cerr << "Vertex shader compilation failed!" << std::endl;
+#endif
             GLint logLen;
             glGetShaderiv(vert_shader, GL_INFO_LOG_LENGTH, &logLen);
             if(logLen > 0) {
                 char* log = new char[logLen];
                 GLsizei written;
                 glGetShaderInfoLog(vert_shader, logLen, &written, log);
+#ifdef _ANDROID
+                LOGI("Shader log: %s", log);
+#else
                 std::cerr << "Shader log:" << log << std::endl;
+#endif
                 delete[] log;
             }
             glDeleteShader(vert_shader);
@@ -104,14 +112,22 @@ namespace glbase {
         int result;
         glGetShaderiv(frag_shader, GL_COMPILE_STATUS, &result);
         if(result == GL_FALSE) {
+#ifdef _ANDROID
+        	LOGI("Fragment shader compilation failed!");
+#else
             std::cerr << "Fragment shader compilation failed!" << std::endl;
+#endif
             GLint logLen;
             glGetShaderiv(frag_shader, GL_INFO_LOG_LENGTH, &logLen);
             if(logLen > 0) {
                 char* log = new char[logLen];
                 GLsizei written;
                 glGetShaderInfoLog(frag_shader, logLen, &written, log);
+#ifdef _ANDROID
+        	    LOGI("Shader log: %s", log);
+#else
                 std::cerr << "Shader log:" << log << std::endl;
+#endif
                 delete[] log;
             }
             glDeleteShader(frag_shader);
@@ -121,10 +137,13 @@ namespace glbase {
         return true;
     }
     
-    bool Shader::Link() {
+    bool Shader::CreateAttachShader() {
         program = glCreateProgram();
         glAttachShader(program, vert_shader);
         glAttachShader(program, frag_shader);
+    }
+
+    bool Shader::Link() {
         glLinkProgram(program);
         int result;
         glGetProgramiv(program, GL_LINK_STATUS, &result);
@@ -155,8 +174,10 @@ namespace glbase {
     }
     
     bool Shader::Use() {
+    	LOGI("program = %d", program);
         if(program) {
             glUseProgram(program);
+            GLCheckError(__FILE__, __LINE__);
             return true;
         }
         return false;
@@ -164,14 +185,20 @@ namespace glbase {
     
     void Shader::SetParam1i(const char* varname, const int value) {
         auto loc = glGetUniformLocation(program, varname);
-        if(loc >= 0)
+        GLCheckError(__FILE__, __LINE__);
+        if(loc >= 0) {
             glUniform1i(loc, value);
+            GLCheckError(__FILE__, __LINE__);
+        }
     }
     
     void Shader::SetParamMat4(const char* varname, const float m[]) {
         auto loc = glGetUniformLocation(program, varname);
-        if(loc >= 0)
+        GLCheckError(__FILE__, __LINE__);
+        if(loc >= 0) {
             glUniformMatrix4fv(loc, 1, GL_FALSE, m);
+            GLCheckError(__FILE__, __LINE__);
+        }
     }
     
     void Shader::Unload() {
@@ -190,7 +217,7 @@ namespace glbase {
         static Shader default_shader;
         static bool inited = false;
         static const char* vert_shader = "\
-        #version 120\n\
+        precision mediump float;\n\
         attribute vec2 v_position;\n\
         attribute vec4 v_color;\n\
         attribute vec2 v_texcoord;\n\
@@ -203,7 +230,7 @@ namespace glbase {
         }\n\
         ";
         static const char* frag_shader = "\
-        #version 120\n\
+        precision mediump float;\n\
         varying vec4 color;\n\
         varying vec2 texcoord;\n\
         uniform sampler2D texid;\n\
@@ -215,14 +242,24 @@ namespace glbase {
         if(!inited) {
             default_shader.LoadVertShader(vert_shader);
             default_shader.LoadFragShader(frag_shader);
+            default_shader.CreateAttachShader();
+            default_shader.BindAttribLocation(0, "v_position");
+            default_shader.BindAttribLocation(1, "v_color");
+            default_shader.BindAttribLocation(2, "v_texcoord");
             default_shader.Link();
             inited = true;
         }
         return default_shader;
     }
     
+    void Shader::BindAttribLocation(int loc, const char* name) {
+        glBindAttribLocation(program, loc, name);
+        GLCheckError(__FILE__, __LINE__);
+    }
+
     void Shader::Unuse() {
         glUseProgram(0);
+        GLCheckError(__FILE__, __LINE__);
     }
     
     Image::~Image() {
@@ -232,8 +269,13 @@ namespace glbase {
     
     bool Image::LoadFile(const std::string &file) {
         unsigned char* data = stbi_load(file.c_str(), &width, &height, nullptr, 4);
+        LOGI("begin load image file, width=%d, height=%d", width, height);
         if(data == nullptr) {
+#if not defined _ANDROID
             std::cout << stbi_failure_reason() << std::endl;
+#else
+            LOGI("load image file failed: %s", stbi_failure_reason());
+#endif
             return false;
         }
         if(buffer != nullptr)
@@ -246,8 +288,13 @@ namespace glbase {
     
     bool Image::LoadMemory(const unsigned char* mem, unsigned int sz) {
         unsigned char* data = stbi_load_from_memory(mem, sz, &width, &height, nullptr, 4);
+        LOGI("begin load image memory, width=%d, height=%d", width, height);
         if(data == nullptr) {
+#if not defined _ANDROID
             std::cout << stbi_failure_reason() << std::endl;
+#else
+            LOGI("load image from memory failed: %s", stbi_failure_reason());
+#endif
             return false;
         }
         if(buffer != nullptr)
@@ -259,32 +306,44 @@ namespace glbase {
     }
     
     void Texture::Load(const unsigned char* data, int x, int y) {
-        if(texture_id)
+        if(texture_id) {
             glDeleteTextures(1, &texture_id);
+            GLCheckError(__FILE__, __LINE__);
+        }
         tex_width = texlen(x);
         tex_height = texlen(y);
         img_width = x;
         img_height = y;
         glGenTextures(1, &texture_id);
+        LOGI("texture_id: %d", texture_id);
+        GLCheckError(__FILE__, __LINE__);
 		glBindTexture(GL_TEXTURE_2D, texture_id);
+		GLCheckError(__FILE__, __LINE__);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		GLCheckError(__FILE__, __LINE__);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		GLCheckError(__FILE__, __LINE__);
         if(data) {
             unsigned char* px = new unsigned char[tex_width * tex_height * 4];
             memset(px, 0, tex_width * tex_height * 4);
             for(int h = 0; h < y; ++h)
                 memcpy(&px[tex_width * 4 * h], &data[x * 4 * h], x * 4);
             glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, tex_width, tex_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, px);
+            GLCheckError(__FILE__, __LINE__);
             delete[] px;
-        } else
+        } else {
             glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, tex_width, tex_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
+            GLCheckError(__FILE__, __LINE__);
+        }
         glBindTexture(GL_TEXTURE_2D, 0);
+        GLCheckError(__FILE__, __LINE__);
     }
     
     void Texture::Unload() {
         if(!texture_id)
             return;
         glDeleteTextures(1, &texture_id);
+        GLCheckError(__FILE__, __LINE__);
         texture_id = 0;
     }
     
@@ -292,13 +351,18 @@ namespace glbase {
         if(!texture_id)
             return;
         glBindTexture(GL_TEXTURE_2D, texture_id);
+        GLCheckError(__FILE__, __LINE__);
         glTexSubImage2D(GL_TEXTURE_2D, 0, offx, offy, width, height, GL_RGBA, GL_UNSIGNED_BYTE, data);
+        GLCheckError(__FILE__, __LINE__);
         glBindTexture(GL_TEXTURE_2D, 0);
+        GLCheckError(__FILE__, __LINE__);
     }
     
     void Texture::Bind() {
-        if(texture_id)
+        if(texture_id) {
             glBindTexture(GL_TEXTURE_2D, texture_id);
+            GLCheckError(__FILE__, __LINE__);
+        }
     }
     
     TextureInfo<4> Texture::GetTextureInfo() {

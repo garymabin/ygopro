@@ -168,9 +168,11 @@ namespace glbase {
         ~Shader();
         bool LoadVertShader(const char* buffer);
         bool LoadFragShader(const char* buffer);
+        bool CreateAttachShader();
         bool Link();
         bool Use();
         void Unload();
+        void BindAttribLocation(int loc, const char* name);
         void SetParam1i(const char* varname, const int value);
         void SetParamMat4(const char* varname, const float m[]);
         

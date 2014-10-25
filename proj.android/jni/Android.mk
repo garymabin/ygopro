@@ -3,7 +3,7 @@ LOCAL_PATH := $(call my-dir)/..
 include $(CLEAR_VARS)
 
 LOCAL_MODULE    := YGOPro
-COMPAT_FILES := $(wildcard $(LOCAL_PATH)/depends/android/*.cpp)
+COMPAT_FILES := $(wildcard $(LOCAL_PATH)/android/*.cpp)
 BUILDIN_C_FILES := $(wildcard $(LOCAL_PATH)/../buildin/*.c)
 NETC_SRC_FILES := $(wildcard $(LOCAL_PATH)/../netc/*.cpp)
 NETS_SRC_FILES := $(wildcard $(LOCAL_PATH)/../nets/*.cpp)
@@ -32,11 +32,11 @@ LOCAL_CFLAGS += -fno-stack-protector
 endif
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/jni
-LOCAL_C_INCLUDES += $(LOCAL_PATH)/depends/freetype/include
-LOCAL_C_INCLUDES += $(LOCAL_PATH)/depends/sqlite3
-LOCAL_C_INCLUDES += $(LOCAL_PATH)/depends/libevent/include
-LOCAL_C_INCLUDES += $(LOCAL_PATH)/depends/android/
-LOCAL_C_INCLUDES += $(LOCAL_PATH)/depends/
+LOCAL_C_INCLUDES += $(LOCAL_PATH)/../depends/freetype/include
+LOCAL_C_INCLUDES += $(LOCAL_PATH)/../depends/sqlite3
+LOCAL_C_INCLUDES += $(LOCAL_PATH)/../depends/libevent/include
+LOCAL_C_INCLUDES += $(LOCAL_PATH)/android
+LOCAL_C_INCLUDES += $(LOCAL_PATH)/../depends
 
 
 LOCAL_LDLIBS := -lEGL -llog -lGLESv1_CM -lGLESv2 -lz -landroid
@@ -52,7 +52,7 @@ LOCAL_STATIC_LIBRARIES += libft2
 
 include $(BUILD_SHARED_LIBRARY)
 
-$(call import-add-path,$(LOCAL_PATH)/depends)
+$(call import-add-path,$(LOCAL_PATH)/../depends)
 $(call import-add-path,$(LOCAL_PATH)/../)
 $(call import-module,openssl)
 $(call import-module,libevent)

@@ -4,8 +4,8 @@
     <string name="gui_texture" value="./conf/gui.png"/>
     <rect name="iconoffset" u="256" v="0" w="20" h="20"/>
     <integer name="iconcolumn" value="12"/>
-    <font name="default" file="./conf/WQYMicroHei.ttf" size="14"/>
-    <font name="window" file="./conf/WQYMicroHei.ttf" size="16"/>
+    <font name="default" file="./conf/wqy-zenhei.ttc" size="14"/>
+    <font name="window" file="./conf/wqy-zenhei.ttc" size="16"/>
     <!-- the following 2 values can be overwritten -->
     <integer name="gui_color" value="0xffc0ffff"/>
     <integer name="font_color" value="0xff000000"/>

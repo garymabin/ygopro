@@ -70,4 +70,13 @@
 
 extern unsigned int proto_version;
 
+//added for android code analysis use, remove it for redefine warnings
+#define _ANDROID
+
+#if defined _ANDROID
+#include <AndroidGlueCompat.h>
+#define likely(x)   __builtin_expect((x),1)
+#define unlikely(x) __builtin_expect((x),0)
+#endif
+
 #endif //_COMMON_H_

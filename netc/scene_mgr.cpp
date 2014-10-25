@@ -56,9 +56,13 @@ namespace ygopro
     
     void SceneMgr::InitDraw() {
         glEnable(GL_BLEND);
+        GLCheckError(__FILE__, __LINE__);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        GLCheckError(__FILE__, __LINE__);
         glDisable(GL_DEPTH_TEST);
+        GLCheckError(__FILE__, __LINE__);
         glActiveTexture(GL_TEXTURE0);
+        GLCheckError(__FILE__, __LINE__);
     }
     
     bool SceneMgr::Update() {

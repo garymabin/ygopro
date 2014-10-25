@@ -13,10 +13,6 @@
 #include "ds/duel_network.h"
 #include "ds/duel_scene.h"
 
-#if defined _ANDROID
-#include <AndroidGlueCompat.h>
-#endif
-
 using namespace ygopro;
 
 static float xrate = 0.0f;
@@ -41,11 +37,8 @@ void android_main(struct android_app* state) {
 //    std::cout << "GL Version (string)  : " << glGetString(GL_VERSION) << std::endl;
 //    std::cout << "GLSL Version : " << glGetString(GL_SHADING_LANGUAGE_VERSION) << std::endl;
 //    glGetError();
-	ImageMgr::Get().InitTextures(commonCfg["image_path"]);
 	if(!stringCfg.LoadConfig(commonCfg["string_conf"])
-			|| DataMgr::Get().LoadDatas(commonCfg["database_file"])
-			|| !ImageMgr::Get().LoadImageConfig(commonCfg["textures_conf"])
-			|| !sgui::SGGUIRoot::GetSingleton().LoadConfigs(commonCfg["gui_conf"])) {
+			|| DataMgr::Get().LoadDatas(commonCfg["database_file"])) {
 		LOGI("failed init configs:");
 		return;
 	}
@@ -62,18 +55,26 @@ void android_main(struct android_app* state) {
     xrate = (float)engine.width / width;
     yrate = (float)engine.height / height;
 
-    sgui::SGGUIRoot::GetSingleton().SetSceneSize({engine.width, engine.height});
-    SceneMgr::Get().SetSceneSize({engine.width, engine.height});
-    SceneMgr::Get().InitDraw();
-    SceneMgr::Get().SetFrameRate((int)commonCfg["frame_rate"]);
 
-    //auto sc = std::make_shared<BuildScene>();
-    //SceneMgr::Get().SetScene(std::static_pointer_cast<Scene>(sc));
-    auto sc = std::make_shared<DuelScene>();
-    SceneMgr::Get().SetScene(std::static_pointer_cast<Scene>(sc));
     LOGI("before main loop:");
+    bool isScmInited = false;
 	while (1) {
 		// Read all pending events.
+		if (unlikely(engine.animating && !isScmInited)) {
+			ImageMgr::Get().InitTextures(commonCfg["image_path"]);
+			ImageMgr::Get().LoadImageConfig(commonCfg["textures_conf"]);
+			sgui::SGGUIRoot::GetSingleton().LoadConfigs(commonCfg["gui_conf"]);
+			sgui::SGGUIRoot::GetSingleton().SetSceneSize( {engine.width, engine.height});
+			LOGI("engine.width = %d, engine.height = %d", engine.width, engine.height);
+			SceneMgr::Get().SetSceneSize( {engine.width, engine.height});
+			SceneMgr::Get().InitDraw();
+			SceneMgr::Get().SetFrameRate((int)commonCfg["frame_rate"]);
+			auto sc = std::make_shared<BuildScene>();
+			SceneMgr::Get().SetScene(std::static_pointer_cast<Scene>(sc));
+//			auto sc = std::make_shared<DuelScene>();
+//			SceneMgr::Get().SetScene(std::static_pointer_cast<Scene>(sc));
+			isScmInited = true;
+		}
 		int ident;
 		int events;
 		struct android_poll_source* source;
@@ -104,7 +105,7 @@ void android_main(struct android_app* state) {
 				break;
 			}
 		}
-		if (engine.animating) {
+		if (likely(engine.animating && isScmInited)) {
 			SceneMgr::Get().CheckFrameRate();
 			SceneMgr::Get().InitDraw();
 			auto& shader = glbase::Shader::GetDefaultShader();
