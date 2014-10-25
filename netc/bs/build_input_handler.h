@@ -1,17 +1,17 @@
 #ifndef _BUILD_INPUT_HANDLER_H_
 #define _BUILD_INPUT_HANDLER_H_
 
-#include "scene_mgr.h"
+#include "../scene_mgr.h"
 
 namespace ygopro
 {
     class BuildScene;
     struct DeckCardData;
     
-    class BuildInputHandler {
+    class BuildInputHandler : public InputHandler {
     public:
         BuildInputHandler(std::shared_ptr<BuildScene> pscene);
-        virtual bool Update();
+        virtual bool UpdateInput();
         virtual void MouseMove(sgui::MouseMoveEvent evt);
         virtual void MouseButtonDown(sgui::MouseButtonEvent evt);
         virtual void MouseButtonUp(sgui::MouseButtonEvent evt);
@@ -20,7 +20,7 @@ namespace ygopro
         virtual void KeyUp(sgui::KeyEvent evt);
         
     protected:
-        std::weak_ptr<BuildScene> build_cene;
+        std::weak_ptr<BuildScene> build_scene;
         std::pair<int, int> hover_pos;
         std::pair<int, int> click_pos;
         std::weak_ptr<DeckCardData> hover_obj;

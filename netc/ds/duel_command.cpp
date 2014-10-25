@@ -1,6 +1,7 @@
-#include "../common/common.h"
+#include "../../common/common.h"
 
-#include "scene_mgr.h"
+#include "../scene_mgr.h"
+
 #include "duel_scene.h"
 #include "duel_command.h"
 
@@ -11,11 +12,11 @@ namespace ygopro
         end_time = SceneMgr::Get().GetGameTime() + tm;
     }
     
-    bool DuelCommandWait::Handle(DuelScene* pscene) {
+    bool DuelCommandWait::Handle(std::shared_ptr<DuelScene> pscene) {
         return SceneMgr::Get().GetGameTime() > end_time;
     }
     
-    bool DuelMessageMove::Handle(DuelScene* pscene) {
+    bool DuelMessageMove::Handle(std::shared_ptr<DuelScene> pscene) {
         auto moving_card = pscene->GetCard(pdata[0], pdata[1], pdata[2], pdata[3]);
         if(moving_card)
             pscene->MoveCard(moving_card, pdata[4], pdata[5], pdata[6], pdata[7], false, 1.0);
