@@ -1,0 +1,384 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		DCFB61E419FBD5AD00FD562D /* liblua5.2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DCFB61E319FBD5AD00FD562D /* liblua5.2.a */; };
+		DCFB620419FBD5F100FD562D /* card.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DCFB61E719FBD5F000FD562D /* card.cpp */; };
+		DCFB620519FBD5F100FD562D /* card.h in Sources */ = {isa = PBXBuildFile; fileRef = DCFB61E819FBD5F000FD562D /* card.h */; };
+		DCFB620719FBD5F100FD562D /* common.h in Sources */ = {isa = PBXBuildFile; fileRef = DCFB61EA19FBD5F000FD562D /* common.h */; };
+		DCFB620819FBD5F100FD562D /* duel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DCFB61EB19FBD5F000FD562D /* duel.cpp */; };
+		DCFB620919FBD5F100FD562D /* duel.h in Sources */ = {isa = PBXBuildFile; fileRef = DCFB61EC19FBD5F000FD562D /* duel.h */; };
+		DCFB620A19FBD5F100FD562D /* effect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DCFB61ED19FBD5F000FD562D /* effect.cpp */; };
+		DCFB620B19FBD5F100FD562D /* effect.h in Sources */ = {isa = PBXBuildFile; fileRef = DCFB61EE19FBD5F000FD562D /* effect.h */; };
+		DCFB620C19FBD5F100FD562D /* effectset.h in Sources */ = {isa = PBXBuildFile; fileRef = DCFB61EF19FBD5F000FD562D /* effectset.h */; };
+		DCFB620D19FBD5F100FD562D /* field.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DCFB61F019FBD5F000FD562D /* field.cpp */; };
+		DCFB620E19FBD5F100FD562D /* field.h in Sources */ = {isa = PBXBuildFile; fileRef = DCFB61F119FBD5F000FD562D /* field.h */; };
+		DCFB620F19FBD5F100FD562D /* group.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DCFB61F219FBD5F000FD562D /* group.cpp */; };
+		DCFB621019FBD5F100FD562D /* group.h in Sources */ = {isa = PBXBuildFile; fileRef = DCFB61F319FBD5F100FD562D /* group.h */; };
+		DCFB621119FBD5F100FD562D /* interpreter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DCFB61F419FBD5F100FD562D /* interpreter.cpp */; };
+		DCFB621219FBD5F100FD562D /* interpreter.h in Sources */ = {isa = PBXBuildFile; fileRef = DCFB61F519FBD5F100FD562D /* interpreter.h */; };
+		DCFB621319FBD5F100FD562D /* libcard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DCFB61F619FBD5F100FD562D /* libcard.cpp */; };
+		DCFB621419FBD5F100FD562D /* libdebug.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DCFB61F719FBD5F100FD562D /* libdebug.cpp */; };
+		DCFB621519FBD5F100FD562D /* libduel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DCFB61F819FBD5F100FD562D /* libduel.cpp */; };
+		DCFB621619FBD5F100FD562D /* libeffect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DCFB61F919FBD5F100FD562D /* libeffect.cpp */; };
+		DCFB621719FBD5F100FD562D /* libgroup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DCFB61FA19FBD5F100FD562D /* libgroup.cpp */; };
+		DCFB621819FBD5F100FD562D /* mem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DCFB61FB19FBD5F100FD562D /* mem.cpp */; };
+		DCFB621919FBD5F100FD562D /* mtrandom.h in Sources */ = {isa = PBXBuildFile; fileRef = DCFB61FC19FBD5F100FD562D /* mtrandom.h */; };
+		DCFB621A19FBD5F100FD562D /* ocgapi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DCFB61FD19FBD5F100FD562D /* ocgapi.cpp */; };
+		DCFB621B19FBD5F100FD562D /* ocgapi.h in Sources */ = {isa = PBXBuildFile; fileRef = DCFB61FE19FBD5F100FD562D /* ocgapi.h */; };
+		DCFB621C19FBD5F100FD562D /* operations.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DCFB61FF19FBD5F100FD562D /* operations.cpp */; };
+		DCFB621D19FBD5F100FD562D /* playerop.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DCFB620019FBD5F100FD562D /* playerop.cpp */; };
+		DCFB621E19FBD5F100FD562D /* processor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DCFB620119FBD5F100FD562D /* processor.cpp */; };
+		DCFB621F19FBD5F100FD562D /* scriptlib.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DCFB620219FBD5F100FD562D /* scriptlib.cpp */; };
+		DCFB622019FBD5F100FD562D /* scriptlib.h in Sources */ = {isa = PBXBuildFile; fileRef = DCFB620319FBD5F100FD562D /* scriptlib.h */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		DCFB61AF19FBD58100FD562D /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		DCFB61B119FBD58100FD562D /* libocgcore.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libocgcore.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		DCFB61B419FBD58100FD562D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		DCFB61B819FBD58200FD562D /* ocgcore-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ocgcore-Prefix.pch"; sourceTree = "<group>"; };
+		DCFB61C219FBD58200FD562D /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		DCFB61C519FBD58200FD562D /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
+		DCFB61E319FBD5AD00FD562D /* liblua5.2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = liblua5.2.a; path = "../../depends/lua/lua5.2/build/Debug-iphoneos/liblua5.2.a"; sourceTree = "<group>"; };
+		DCFB61E719FBD5F000FD562D /* card.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = card.cpp; path = ../card.cpp; sourceTree = "<group>"; };
+		DCFB61E819FBD5F000FD562D /* card.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = card.h; path = ../card.h; sourceTree = "<group>"; };
+		DCFB61E919FBD5F000FD562D /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; name = CMakeLists.txt; path = ../CMakeLists.txt; sourceTree = "<group>"; };
+		DCFB61EA19FBD5F000FD562D /* common.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = common.h; path = ../common.h; sourceTree = "<group>"; };
+		DCFB61EB19FBD5F000FD562D /* duel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = duel.cpp; path = ../duel.cpp; sourceTree = "<group>"; };
+		DCFB61EC19FBD5F000FD562D /* duel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = duel.h; path = ../duel.h; sourceTree = "<group>"; };
+		DCFB61ED19FBD5F000FD562D /* effect.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = effect.cpp; path = ../effect.cpp; sourceTree = "<group>"; };
+		DCFB61EE19FBD5F000FD562D /* effect.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = effect.h; path = ../effect.h; sourceTree = "<group>"; };
+		DCFB61EF19FBD5F000FD562D /* effectset.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = effectset.h; path = ../effectset.h; sourceTree = "<group>"; };
+		DCFB61F019FBD5F000FD562D /* field.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = field.cpp; path = ../field.cpp; sourceTree = "<group>"; };
+		DCFB61F119FBD5F000FD562D /* field.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = field.h; path = ../field.h; sourceTree = "<group>"; };
+		DCFB61F219FBD5F000FD562D /* group.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = group.cpp; path = ../group.cpp; sourceTree = "<group>"; };
+		DCFB61F319FBD5F100FD562D /* group.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = group.h; path = ../group.h; sourceTree = "<group>"; };
+		DCFB61F419FBD5F100FD562D /* interpreter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = interpreter.cpp; path = ../interpreter.cpp; sourceTree = "<group>"; };
+		DCFB61F519FBD5F100FD562D /* interpreter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = interpreter.h; path = ../interpreter.h; sourceTree = "<group>"; };
+		DCFB61F619FBD5F100FD562D /* libcard.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = libcard.cpp; path = ../libcard.cpp; sourceTree = "<group>"; };
+		DCFB61F719FBD5F100FD562D /* libdebug.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = libdebug.cpp; path = ../libdebug.cpp; sourceTree = "<group>"; };
+		DCFB61F819FBD5F100FD562D /* libduel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = libduel.cpp; path = ../libduel.cpp; sourceTree = "<group>"; };
+		DCFB61F919FBD5F100FD562D /* libeffect.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = libeffect.cpp; path = ../libeffect.cpp; sourceTree = "<group>"; };
+		DCFB61FA19FBD5F100FD562D /* libgroup.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = libgroup.cpp; path = ../libgroup.cpp; sourceTree = "<group>"; };
+		DCFB61FB19FBD5F100FD562D /* mem.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = mem.cpp; path = ../mem.cpp; sourceTree = "<group>"; };
+		DCFB61FC19FBD5F100FD562D /* mtrandom.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = mtrandom.h; path = ../mtrandom.h; sourceTree = "<group>"; };
+		DCFB61FD19FBD5F100FD562D /* ocgapi.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ocgapi.cpp; path = ../ocgapi.cpp; sourceTree = "<group>"; };
+		DCFB61FE19FBD5F100FD562D /* ocgapi.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ocgapi.h; path = ../ocgapi.h; sourceTree = "<group>"; };
+		DCFB61FF19FBD5F100FD562D /* operations.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = operations.cpp; path = ../operations.cpp; sourceTree = "<group>"; };
+		DCFB620019FBD5F100FD562D /* playerop.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = playerop.cpp; path = ../playerop.cpp; sourceTree = "<group>"; };
+		DCFB620119FBD5F100FD562D /* processor.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = processor.cpp; path = ../processor.cpp; sourceTree = "<group>"; };
+		DCFB620219FBD5F100FD562D /* scriptlib.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = scriptlib.cpp; path = ../scriptlib.cpp; sourceTree = "<group>"; };
+		DCFB620319FBD5F100FD562D /* scriptlib.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = scriptlib.h; path = ../scriptlib.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		DCFB61AE19FBD58100FD562D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DCFB61E419FBD5AD00FD562D /* liblua5.2.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		DCFB61A819FBD58100FD562D = {
+			isa = PBXGroup;
+			children = (
+				DCFB61E719FBD5F000FD562D /* card.cpp */,
+				DCFB61E819FBD5F000FD562D /* card.h */,
+				DCFB61E919FBD5F000FD562D /* CMakeLists.txt */,
+				DCFB61EA19FBD5F000FD562D /* common.h */,
+				DCFB61EB19FBD5F000FD562D /* duel.cpp */,
+				DCFB61EC19FBD5F000FD562D /* duel.h */,
+				DCFB61ED19FBD5F000FD562D /* effect.cpp */,
+				DCFB61EE19FBD5F000FD562D /* effect.h */,
+				DCFB61EF19FBD5F000FD562D /* effectset.h */,
+				DCFB61F019FBD5F000FD562D /* field.cpp */,
+				DCFB61F119FBD5F000FD562D /* field.h */,
+				DCFB61F219FBD5F000FD562D /* group.cpp */,
+				DCFB61F319FBD5F100FD562D /* group.h */,
+				DCFB61F419FBD5F100FD562D /* interpreter.cpp */,
+				DCFB61F519FBD5F100FD562D /* interpreter.h */,
+				DCFB61F619FBD5F100FD562D /* libcard.cpp */,
+				DCFB61F719FBD5F100FD562D /* libdebug.cpp */,
+				DCFB61F819FBD5F100FD562D /* libduel.cpp */,
+				DCFB61F919FBD5F100FD562D /* libeffect.cpp */,
+				DCFB61FA19FBD5F100FD562D /* libgroup.cpp */,
+				DCFB61FB19FBD5F100FD562D /* mem.cpp */,
+				DCFB61FC19FBD5F100FD562D /* mtrandom.h */,
+				DCFB61FD19FBD5F100FD562D /* ocgapi.cpp */,
+				DCFB61FE19FBD5F100FD562D /* ocgapi.h */,
+				DCFB61FF19FBD5F100FD562D /* operations.cpp */,
+				DCFB620019FBD5F100FD562D /* playerop.cpp */,
+				DCFB620119FBD5F100FD562D /* processor.cpp */,
+				DCFB620219FBD5F100FD562D /* scriptlib.cpp */,
+				DCFB620319FBD5F100FD562D /* scriptlib.h */,
+				DCFB61B619FBD58200FD562D /* ocgcore */,
+				DCFB61B319FBD58100FD562D /* Frameworks */,
+				DCFB61B219FBD58100FD562D /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		DCFB61B219FBD58100FD562D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				DCFB61B119FBD58100FD562D /* libocgcore.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		DCFB61B319FBD58100FD562D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				DCFB61E319FBD5AD00FD562D /* liblua5.2.a */,
+				DCFB61B419FBD58100FD562D /* Foundation.framework */,
+				DCFB61C219FBD58200FD562D /* XCTest.framework */,
+				DCFB61C519FBD58200FD562D /* UIKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		DCFB61B619FBD58200FD562D /* ocgcore */ = {
+			isa = PBXGroup;
+			children = (
+				DCFB61B719FBD58200FD562D /* Supporting Files */,
+			);
+			path = ocgcore;
+			sourceTree = "<group>";
+		};
+		DCFB61B719FBD58200FD562D /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				DCFB61B819FBD58200FD562D /* ocgcore-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		DCFB61B019FBD58100FD562D /* ocgcore */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DCFB61D419FBD58200FD562D /* Build configuration list for PBXNativeTarget "ocgcore" */;
+			buildPhases = (
+				DCFB61AD19FBD58100FD562D /* Sources */,
+				DCFB61AE19FBD58100FD562D /* Frameworks */,
+				DCFB61AF19FBD58100FD562D /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ocgcore;
+			productName = ocgcore;
+			productReference = DCFB61B119FBD58100FD562D /* libocgcore.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		DCFB61A919FBD58100FD562D /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0510;
+				ORGANIZATIONNAME = "garymabin@gmail.com";
+			};
+			buildConfigurationList = DCFB61AC19FBD58100FD562D /* Build configuration list for PBXProject "ocgcore" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = DCFB61A819FBD58100FD562D;
+			productRefGroup = DCFB61B219FBD58100FD562D /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				DCFB61B019FBD58100FD562D /* ocgcore */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		DCFB61AD19FBD58100FD562D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DCFB620419FBD5F100FD562D /* card.cpp in Sources */,
+				DCFB620519FBD5F100FD562D /* card.h in Sources */,
+				DCFB620719FBD5F100FD562D /* common.h in Sources */,
+				DCFB620819FBD5F100FD562D /* duel.cpp in Sources */,
+				DCFB620919FBD5F100FD562D /* duel.h in Sources */,
+				DCFB620A19FBD5F100FD562D /* effect.cpp in Sources */,
+				DCFB620B19FBD5F100FD562D /* effect.h in Sources */,
+				DCFB620C19FBD5F100FD562D /* effectset.h in Sources */,
+				DCFB620D19FBD5F100FD562D /* field.cpp in Sources */,
+				DCFB620E19FBD5F100FD562D /* field.h in Sources */,
+				DCFB620F19FBD5F100FD562D /* group.cpp in Sources */,
+				DCFB621019FBD5F100FD562D /* group.h in Sources */,
+				DCFB621119FBD5F100FD562D /* interpreter.cpp in Sources */,
+				DCFB621219FBD5F100FD562D /* interpreter.h in Sources */,
+				DCFB621319FBD5F100FD562D /* libcard.cpp in Sources */,
+				DCFB621419FBD5F100FD562D /* libdebug.cpp in Sources */,
+				DCFB621519FBD5F100FD562D /* libduel.cpp in Sources */,
+				DCFB621619FBD5F100FD562D /* libeffect.cpp in Sources */,
+				DCFB621719FBD5F100FD562D /* libgroup.cpp in Sources */,
+				DCFB621819FBD5F100FD562D /* mem.cpp in Sources */,
+				DCFB621919FBD5F100FD562D /* mtrandom.h in Sources */,
+				DCFB621A19FBD5F100FD562D /* ocgapi.cpp in Sources */,
+				DCFB621B19FBD5F100FD562D /* ocgapi.h in Sources */,
+				DCFB621C19FBD5F100FD562D /* operations.cpp in Sources */,
+				DCFB621D19FBD5F100FD562D /* playerop.cpp in Sources */,
+				DCFB621E19FBD5F100FD562D /* processor.cpp in Sources */,
+				DCFB621F19FBD5F100FD562D /* scriptlib.cpp in Sources */,
+				DCFB622019FBD5F100FD562D /* scriptlib.h in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		DCFB61D219FBD58200FD562D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		DCFB61D319FBD58200FD562D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		DCFB61D519FBD58200FD562D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/ocgcore.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "ocgcore/ocgcore-Prefix.pch";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/mabin/git/ygopro2/depends/lua/lua5.2/build/Debug-iphoneos",
+				);
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		DCFB61D619FBD58200FD562D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/ocgcore.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "ocgcore/ocgcore-Prefix.pch";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/mabin/git/ygopro2/depends/lua/lua5.2/build/Debug-iphoneos",
+				);
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		DCFB61AC19FBD58100FD562D /* Build configuration list for PBXProject "ocgcore" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DCFB61D219FBD58200FD562D /* Debug */,
+				DCFB61D319FBD58200FD562D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DCFB61D419FBD58200FD562D /* Build configuration list for PBXNativeTarget "ocgcore" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DCFB61D519FBD58200FD562D /* Debug */,
+				DCFB61D619FBD58200FD562D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = DCFB61A919FBD58100FD562D /* Project object */;
+}

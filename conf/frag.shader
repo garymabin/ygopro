@@ -1,14 +1,13 @@
-#version 330
-in vec4 color;
-in vec4 hcolor;
-in vec2 texcoord;
-layout (location = 0) out vec4 frag_color;
+precision mediump float;
+varying vec4 color;
+varying vec4 hcolor;
+varying vec2 texcoord;
 uniform sampler2D texid;
 
-void main() {
+void main(void) {
   if(gl_FrontFacing) {
-    vec4 texcolor = texture(texid, texcoord);
-    frag_color = mix(texcolor * color, vec4(hcolor.r, hcolor.g, hcolor.b, 1.0), hcolor.a);
+    vec4 texcolor = texture2D(texid, texcoord);
+    gl_FragColor = mix(texcolor * color, vec4(hcolor.r, hcolor.g, hcolor.b, 1.0), hcolor.a);
   } else {
     discard;
   }

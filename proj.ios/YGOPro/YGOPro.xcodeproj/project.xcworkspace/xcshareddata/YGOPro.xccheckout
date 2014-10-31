@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>B95773C3-C7CE-49AD-8AD9-138AA7C2F97D</string>
+	<key>IDESourceControlProjectName</key>
+	<string>YGOPro</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>E7AD795D-F1AC-43BB-95A6-E623B9588940</key>
+		<string>ssh://github.com/garymabin/ygopro.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>proj.ios/YGOPro/YGOPro.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>E7AD795D-F1AC-43BB-95A6-E623B9588940</key>
+		<string>../../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>ssh://github.com/garymabin/ygopro.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>E7AD795D-F1AC-43BB-95A6-E623B9588940</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>E7AD795D-F1AC-43BB-95A6-E623B9588940</string>
+			<key>IDESourceControlWCCName</key>
+			<string>ygopro2</string>
+		</dict>
+	</array>
+</dict>
+</plist>

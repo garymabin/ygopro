@@ -217,6 +217,7 @@ namespace glbase {
         static Shader default_shader;
         static bool inited = false;
         static const char* vert_shader = "\
+        #version 100\n\
         precision mediump float;\n\
         attribute vec2 v_position;\n\
         attribute vec4 v_color;\n\
@@ -230,6 +231,7 @@ namespace glbase {
         }\n\
         ";
         static const char* frag_shader = "\
+        #version 100\n\
         precision mediump float;\n\
         varying vec4 color;\n\
         varying vec2 texcoord;\n\

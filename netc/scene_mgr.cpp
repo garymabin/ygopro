@@ -63,6 +63,8 @@ namespace ygopro
         GLCheckError(__FILE__, __LINE__);
         glActiveTexture(GL_TEXTURE0);
         GLCheckError(__FILE__, __LINE__);
+        glDisable(GL_DITHER);
+        GLCheckError(__FILE__, __LINE__);
     }
     
     bool SceneMgr::Update() {

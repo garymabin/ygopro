@@ -1,0 +1,639 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		DCFB60A219FB42EC00FD562D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCFB60A119FB42EC00FD562D /* Foundation.framework */; };
+		DCFB60A419FB42EC00FD562D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCFB60A319FB42EC00FD562D /* CoreGraphics.framework */; };
+		DCFB60A619FB42EC00FD562D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCFB60A519FB42EC00FD562D /* UIKit.framework */; };
+		DCFB60A819FB42EC00FD562D /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCFB60A719FB42EC00FD562D /* CoreData.framework */; };
+		DCFB60AE19FB42EC00FD562D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = DCFB60AC19FB42EC00FD562D /* InfoPlist.strings */; };
+		DCFB60B419FB42ED00FD562D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DCFB60B319FB42ED00FD562D /* AppDelegate.m */; };
+		DCFB60B719FB42ED00FD562D /* YGOPro.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DCFB60B519FB42ED00FD562D /* YGOPro.xcdatamodeld */; };
+		DCFB60B919FB42ED00FD562D /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DCFB60B819FB42ED00FD562D /* Images.xcassets */; };
+		DCFB60C019FB42ED00FD562D /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCFB60BF19FB42ED00FD562D /* XCTest.framework */; };
+		DCFB60C119FB42ED00FD562D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCFB60A119FB42EC00FD562D /* Foundation.framework */; };
+		DCFB60C219FB42ED00FD562D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCFB60A519FB42EC00FD562D /* UIKit.framework */; };
+		DCFB60C319FB42ED00FD562D /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCFB60A719FB42EC00FD562D /* CoreData.framework */; };
+		DCFB60CB19FB42ED00FD562D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = DCFB60C919FB42ED00FD562D /* InfoPlist.strings */; };
+		DCFB60CD19FB42ED00FD562D /* YGOProTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DCFB60CC19FB42ED00FD562D /* YGOProTests.m */; };
+		DCFB60D719FB436C00FD562D /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCFB60D619FB436C00FD562D /* OpenGLES.framework */; };
+		DCFB60D919FB437100FD562D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCFB60D819FB437100FD562D /* QuartzCore.framework */; };
+		DCFB60DB19FB44F000FD562D /* buildin in Sources */ = {isa = PBXBuildFile; fileRef = DCFB60DA19FB44F000FD562D /* buildin */; };
+		DCFB60DD19FB451A00FD562D /* common in Sources */ = {isa = PBXBuildFile; fileRef = DCFB60DC19FB451A00FD562D /* common */; };
+		DCFB60DF19FB454000FD562D /* netc in Sources */ = {isa = PBXBuildFile; fileRef = DCFB60DE19FB454000FD562D /* netc */; };
+		DCFB60E219FB7D9400FD562D /* YGOProRenderView.m in Sources */ = {isa = PBXBuildFile; fileRef = DCFB60E119FB7D9400FD562D /* YGOProRenderView.m */; };
+		DCFB60E619FBB56A00FD562D /* YGOProRenderEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DCFB60E419FBB56A00FD562D /* YGOProRenderEngine.cpp */; };
+		DCFB60F319FBD1EA00FD562D /* conf in Resources */ = {isa = PBXBuildFile; fileRef = DCFB60F219FBD1EA00FD562D /* conf */; };
+		DCFB60F519FBD20B00FD562D /* common.xml in Resources */ = {isa = PBXBuildFile; fileRef = DCFB60F419FBD20B00FD562D /* common.xml */; };
+		DCFB625D19FBD69D00FD562D /* glm in Sources */ = {isa = PBXBuildFile; fileRef = DCFB625C19FBD69D00FD562D /* glm */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		DCFB60C419FB42ED00FD562D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DCFB609619FB42EC00FD562D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DCFB609D19FB42EC00FD562D;
+			remoteInfo = YGOPro;
+		};
+		DCFB612E19FBD4E600FD562D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DCFB612919FBD4E600FD562D /* lua5.2.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = DCFB610019FBD4E500FD562D;
+			remoteInfo = lua5.2;
+		};
+		DCFB61DF19FBD58200FD562D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DCFB61DA19FBD58200FD562D /* ocgcore.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = DCFB61B119FBD58100FD562D;
+			remoteInfo = ocgcore;
+		};
+		DCFB625819FBD68000FD562D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DCFB625319FBD67F00FD562D /* freetype.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = DCFB622A19FBD67F00FD562D;
+			remoteInfo = freetype;
+		};
+		DCFB625A19FBD68000FD562D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DCFB625319FBD67F00FD562D /* freetype.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = DCFB623A19FBD67F00FD562D;
+			remoteInfo = freetypeTests;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		DCFB609E19FB42EC00FD562D /* YGOPro.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YGOPro.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		DCFB60A119FB42EC00FD562D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		DCFB60A319FB42EC00FD562D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		DCFB60A519FB42EC00FD562D /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		DCFB60A719FB42EC00FD562D /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		DCFB60AB19FB42EC00FD562D /* YGOPro-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "YGOPro-Info.plist"; sourceTree = "<group>"; };
+		DCFB60AD19FB42EC00FD562D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		DCFB60B119FB42ED00FD562D /* YGOPro-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "YGOPro-Prefix.pch"; sourceTree = "<group>"; };
+		DCFB60B219FB42ED00FD562D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		DCFB60B319FB42ED00FD562D /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		DCFB60B619FB42ED00FD562D /* YGOPro.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = YGOPro.xcdatamodel; sourceTree = "<group>"; };
+		DCFB60B819FB42ED00FD562D /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		DCFB60BE19FB42ED00FD562D /* YGOProTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = YGOProTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		DCFB60BF19FB42ED00FD562D /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		DCFB60C819FB42ED00FD562D /* YGOProTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "YGOProTests-Info.plist"; sourceTree = "<group>"; };
+		DCFB60CA19FB42ED00FD562D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		DCFB60CC19FB42ED00FD562D /* YGOProTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YGOProTests.m; sourceTree = "<group>"; };
+		DCFB60D619FB436C00FD562D /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
+		DCFB60D819FB437100FD562D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		DCFB60DA19FB44F000FD562D /* buildin */ = {isa = PBXFileReference; lastKnownFileType = folder; name = buildin; path = ../../buildin; sourceTree = "<group>"; };
+		DCFB60DC19FB451A00FD562D /* common */ = {isa = PBXFileReference; lastKnownFileType = folder; name = common; path = ../../common; sourceTree = "<group>"; };
+		DCFB60DE19FB454000FD562D /* netc */ = {isa = PBXFileReference; lastKnownFileType = folder; name = netc; path = ../../netc; sourceTree = "<group>"; };
+		DCFB60E019FB7D9400FD562D /* YGOProRenderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YGOProRenderView.h; sourceTree = "<group>"; };
+		DCFB60E119FB7D9400FD562D /* YGOProRenderView.m */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = YGOProRenderView.m; sourceTree = "<group>"; };
+		DCFB60E419FBB56A00FD562D /* YGOProRenderEngine.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = YGOProRenderEngine.cpp; sourceTree = "<group>"; };
+		DCFB60E519FBB56A00FD562D /* YGOProRenderEngine.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = YGOProRenderEngine.h; sourceTree = "<group>"; };
+		DCFB60F219FBD1EA00FD562D /* conf */ = {isa = PBXFileReference; lastKnownFileType = folder; name = conf; path = ../../conf; sourceTree = "<group>"; };
+		DCFB60F419FBD20B00FD562D /* common.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = common.xml; path = ../../common.xml; sourceTree = "<group>"; };
+		DCFB60F619FBD3B500FD562D /* buildin */ = {isa = PBXFileReference; lastKnownFileType = folder; name = buildin; path = ../../buildin; sourceTree = "<group>"; };
+		DCFB612919FBD4E600FD562D /* lua5.2.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = lua5.2.xcodeproj; path = ../../depends/lua/lua5.2/lua5.2.xcodeproj; sourceTree = "<group>"; };
+		DCFB61DA19FBD58200FD562D /* ocgcore.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ocgcore.xcodeproj; path = ../../ocgcore/ocgcore/ocgcore.xcodeproj; sourceTree = "<group>"; };
+		DCFB625319FBD67F00FD562D /* freetype.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = freetype.xcodeproj; path = ../../depends/freetype/freetype/freetype.xcodeproj; sourceTree = "<group>"; };
+		DCFB625C19FBD69D00FD562D /* glm */ = {isa = PBXFileReference; lastKnownFileType = folder; name = glm; path = ../../depends/glm; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		DCFB609B19FB42EC00FD562D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DCFB60D919FB437100FD562D /* QuartzCore.framework in Frameworks */,
+				DCFB60D719FB436C00FD562D /* OpenGLES.framework in Frameworks */,
+				DCFB60A419FB42EC00FD562D /* CoreGraphics.framework in Frameworks */,
+				DCFB60A819FB42EC00FD562D /* CoreData.framework in Frameworks */,
+				DCFB60A619FB42EC00FD562D /* UIKit.framework in Frameworks */,
+				DCFB60A219FB42EC00FD562D /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DCFB60BB19FB42ED00FD562D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DCFB60C019FB42ED00FD562D /* XCTest.framework in Frameworks */,
+				DCFB60C319FB42ED00FD562D /* CoreData.framework in Frameworks */,
+				DCFB60C219FB42ED00FD562D /* UIKit.framework in Frameworks */,
+				DCFB60C119FB42ED00FD562D /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		DCFB609519FB42EC00FD562D = {
+			isa = PBXGroup;
+			children = (
+				DCFB625C19FBD69D00FD562D /* glm */,
+				DCFB625319FBD67F00FD562D /* freetype.xcodeproj */,
+				DCFB61DA19FBD58200FD562D /* ocgcore.xcodeproj */,
+				DCFB612919FBD4E600FD562D /* lua5.2.xcodeproj */,
+				DCFB60F619FBD3B500FD562D /* buildin */,
+				DCFB60F419FBD20B00FD562D /* common.xml */,
+				DCFB60F219FBD1EA00FD562D /* conf */,
+				DCFB60DE19FB454000FD562D /* netc */,
+				DCFB60DC19FB451A00FD562D /* common */,
+				DCFB60DA19FB44F000FD562D /* buildin */,
+				DCFB60A919FB42EC00FD562D /* YGOPro */,
+				DCFB60C619FB42ED00FD562D /* YGOProTests */,
+				DCFB60A019FB42EC00FD562D /* Frameworks */,
+				DCFB609F19FB42EC00FD562D /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		DCFB609F19FB42EC00FD562D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				DCFB609E19FB42EC00FD562D /* YGOPro.app */,
+				DCFB60BE19FB42ED00FD562D /* YGOProTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		DCFB60A019FB42EC00FD562D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				DCFB60D819FB437100FD562D /* QuartzCore.framework */,
+				DCFB60D619FB436C00FD562D /* OpenGLES.framework */,
+				DCFB60A119FB42EC00FD562D /* Foundation.framework */,
+				DCFB60A319FB42EC00FD562D /* CoreGraphics.framework */,
+				DCFB60A519FB42EC00FD562D /* UIKit.framework */,
+				DCFB60A719FB42EC00FD562D /* CoreData.framework */,
+				DCFB60BF19FB42ED00FD562D /* XCTest.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		DCFB60A919FB42EC00FD562D /* YGOPro */ = {
+			isa = PBXGroup;
+			children = (
+				DCFB60B219FB42ED00FD562D /* AppDelegate.h */,
+				DCFB60B319FB42ED00FD562D /* AppDelegate.m */,
+				DCFB60B819FB42ED00FD562D /* Images.xcassets */,
+				DCFB60B519FB42ED00FD562D /* YGOPro.xcdatamodeld */,
+				DCFB60AA19FB42EC00FD562D /* Supporting Files */,
+				DCFB60E019FB7D9400FD562D /* YGOProRenderView.h */,
+				DCFB60E119FB7D9400FD562D /* YGOProRenderView.m */,
+				DCFB60E419FBB56A00FD562D /* YGOProRenderEngine.cpp */,
+				DCFB60E519FBB56A00FD562D /* YGOProRenderEngine.h */,
+			);
+			path = YGOPro;
+			sourceTree = "<group>";
+		};
+		DCFB60AA19FB42EC00FD562D /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				DCFB60AB19FB42EC00FD562D /* YGOPro-Info.plist */,
+				DCFB60AC19FB42EC00FD562D /* InfoPlist.strings */,
+				DCFB60B119FB42ED00FD562D /* YGOPro-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		DCFB60C619FB42ED00FD562D /* YGOProTests */ = {
+			isa = PBXGroup;
+			children = (
+				DCFB60CC19FB42ED00FD562D /* YGOProTests.m */,
+				DCFB60C719FB42ED00FD562D /* Supporting Files */,
+			);
+			path = YGOProTests;
+			sourceTree = "<group>";
+		};
+		DCFB60C719FB42ED00FD562D /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				DCFB60C819FB42ED00FD562D /* YGOProTests-Info.plist */,
+				DCFB60C919FB42ED00FD562D /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		DCFB612A19FBD4E600FD562D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				DCFB612F19FBD4E600FD562D /* liblua5.2.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		DCFB61DB19FBD58200FD562D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				DCFB61E019FBD58200FD562D /* libocgcore.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		DCFB625419FBD67F00FD562D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				DCFB625919FBD68000FD562D /* libfreetype.a */,
+				DCFB625B19FBD68000FD562D /* freetypeTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		DCFB609D19FB42EC00FD562D /* YGOPro */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DCFB60D019FB42ED00FD562D /* Build configuration list for PBXNativeTarget "YGOPro" */;
+			buildPhases = (
+				DCFB609A19FB42EC00FD562D /* Sources */,
+				DCFB609B19FB42EC00FD562D /* Frameworks */,
+				DCFB609C19FB42EC00FD562D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = YGOPro;
+			productName = YGOPro;
+			productReference = DCFB609E19FB42EC00FD562D /* YGOPro.app */;
+			productType = "com.apple.product-type.application";
+		};
+		DCFB60BD19FB42ED00FD562D /* YGOProTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DCFB60D319FB42ED00FD562D /* Build configuration list for PBXNativeTarget "YGOProTests" */;
+			buildPhases = (
+				DCFB60BA19FB42ED00FD562D /* Sources */,
+				DCFB60BB19FB42ED00FD562D /* Frameworks */,
+				DCFB60BC19FB42ED00FD562D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				DCFB60C519FB42ED00FD562D /* PBXTargetDependency */,
+			);
+			name = YGOProTests;
+			productName = YGOProTests;
+			productReference = DCFB60BE19FB42ED00FD562D /* YGOProTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		DCFB609619FB42EC00FD562D /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0510;
+				ORGANIZATIONNAME = "garymabin@gmail.com";
+				TargetAttributes = {
+					DCFB60BD19FB42ED00FD562D = {
+						TestTargetID = DCFB609D19FB42EC00FD562D;
+					};
+				};
+			};
+			buildConfigurationList = DCFB609919FB42EC00FD562D /* Build configuration list for PBXProject "YGOPro" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = DCFB609519FB42EC00FD562D;
+			productRefGroup = DCFB609F19FB42EC00FD562D /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = DCFB625419FBD67F00FD562D /* Products */;
+					ProjectRef = DCFB625319FBD67F00FD562D /* freetype.xcodeproj */;
+				},
+				{
+					ProductGroup = DCFB612A19FBD4E600FD562D /* Products */;
+					ProjectRef = DCFB612919FBD4E600FD562D /* lua5.2.xcodeproj */;
+				},
+				{
+					ProductGroup = DCFB61DB19FBD58200FD562D /* Products */;
+					ProjectRef = DCFB61DA19FBD58200FD562D /* ocgcore.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				DCFB609D19FB42EC00FD562D /* YGOPro */,
+				DCFB60BD19FB42ED00FD562D /* YGOProTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		DCFB612F19FBD4E600FD562D /* liblua5.2.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = liblua5.2.a;
+			remoteRef = DCFB612E19FBD4E600FD562D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		DCFB61E019FBD58200FD562D /* libocgcore.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libocgcore.a;
+			remoteRef = DCFB61DF19FBD58200FD562D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		DCFB625919FBD68000FD562D /* libfreetype.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libfreetype.a;
+			remoteRef = DCFB625819FBD68000FD562D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		DCFB625B19FBD68000FD562D /* freetypeTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = freetypeTests.xctest;
+			remoteRef = DCFB625A19FBD68000FD562D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXResourcesBuildPhase section */
+		DCFB609C19FB42EC00FD562D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DCFB60F519FBD20B00FD562D /* common.xml in Resources */,
+				DCFB60F319FBD1EA00FD562D /* conf in Resources */,
+				DCFB60AE19FB42EC00FD562D /* InfoPlist.strings in Resources */,
+				DCFB60B919FB42ED00FD562D /* Images.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DCFB60BC19FB42ED00FD562D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DCFB60CB19FB42ED00FD562D /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		DCFB609A19FB42EC00FD562D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DCFB625D19FBD69D00FD562D /* glm in Sources */,
+				DCFB60DB19FB44F000FD562D /* buildin in Sources */,
+				DCFB60DF19FB454000FD562D /* netc in Sources */,
+				DCFB60E219FB7D9400FD562D /* YGOProRenderView.m in Sources */,
+				DCFB60DD19FB451A00FD562D /* common in Sources */,
+				DCFB60B419FB42ED00FD562D /* AppDelegate.m in Sources */,
+				DCFB60E619FBB56A00FD562D /* YGOProRenderEngine.cpp in Sources */,
+				DCFB60B719FB42ED00FD562D /* YGOPro.xcdatamodeld in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DCFB60BA19FB42ED00FD562D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DCFB60CD19FB42ED00FD562D /* YGOProTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		DCFB60C519FB42ED00FD562D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DCFB609D19FB42EC00FD562D /* YGOPro */;
+			targetProxy = DCFB60C419FB42ED00FD562D /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		DCFB60AC19FB42EC00FD562D /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DCFB60AD19FB42EC00FD562D /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		DCFB60C919FB42ED00FD562D /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DCFB60CA19FB42ED00FD562D /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		DCFB60CE19FB42ED00FD562D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/OSX10.9.xctoolchain/usr/include,
+					"$(PROJECT_DIR)/../../netc",
+					"$(PROJECT_DIR)/../../common",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				USER_HEADER_SEARCH_PATHS = "";
+			};
+			name = Debug;
+		};
+		DCFB60CF19FB42ED00FD562D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/OSX10.9.xctoolchain/usr/include,
+					"$(PROJECT_DIR)/../../netc",
+					"$(PROJECT_DIR)/../../common",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				SDKROOT = iphoneos;
+				USER_HEADER_SEARCH_PATHS = "";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		DCFB60D119FB42ED00FD562D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "YGOPro/YGOPro-Prefix.pch";
+				INFOPLIST_FILE = "YGOPro/YGOPro-Info.plist";
+				OTHER_CFLAGS = "-D_IOS";
+				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		DCFB60D219FB42ED00FD562D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "YGOPro/YGOPro-Prefix.pch";
+				INFOPLIST_FILE = "YGOPro/YGOPro-Info.plist";
+				OTHER_CFLAGS = "-D_IOS";
+				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		DCFB60D419FB42ED00FD562D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/YGOPro.app/YGOPro";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "YGOPro/YGOPro-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "YGOProTests/YGOProTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		DCFB60D519FB42ED00FD562D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/YGOPro.app/YGOPro";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "YGOPro/YGOPro-Prefix.pch";
+				INFOPLIST_FILE = "YGOProTests/YGOProTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		DCFB609919FB42EC00FD562D /* Build configuration list for PBXProject "YGOPro" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DCFB60CE19FB42ED00FD562D /* Debug */,
+				DCFB60CF19FB42ED00FD562D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DCFB60D019FB42ED00FD562D /* Build configuration list for PBXNativeTarget "YGOPro" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DCFB60D119FB42ED00FD562D /* Debug */,
+				DCFB60D219FB42ED00FD562D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		DCFB60D319FB42ED00FD562D /* Build configuration list for PBXNativeTarget "YGOProTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DCFB60D419FB42ED00FD562D /* Debug */,
+				DCFB60D519FB42ED00FD562D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		DCFB60B519FB42ED00FD562D /* YGOPro.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				DCFB60B619FB42ED00FD562D /* YGOPro.xcdatamodel */,
+			);
+			currentVersion = DCFB60B619FB42ED00FD562D /* YGOPro.xcdatamodel */;
+			path = YGOPro.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = DCFB609619FB42EC00FD562D /* Project object */;
+}
