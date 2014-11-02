@@ -2,6 +2,7 @@
 #define _SUNGUI_H_
 
 #include "glbase.h"
+#include "../common/common.h"
 #if not defined _ANDROID
 #include <GLFW/glfw3.h>
 #endif

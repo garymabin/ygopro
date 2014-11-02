@@ -1,13 +1,13 @@
 #ifndef _ANDROID_JNI_TOOLS_
 #define _ANDROID_JNI_TOOLS_
 #if defined _ANDROID
-#include <android_native_app_glue.h>
 #include <jni.h>
 #include <string>
+#include <NvAppBase/NvPlatformContext.h>
 
 namespace android
 {
-	extern const std::string getCoreConfigDir(android_app* app);
+	extern const std::string getCoreConfigDir(NvPlatformContext* context);
 }
 
 #endif /*_ANDROID*/

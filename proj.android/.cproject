@@ -20,12 +20,15 @@
 							<option id="cdt.managedbuild.option.gnu.cross.prefix.1140772513" name="Prefix" superClass="cdt.managedbuild.option.gnu.cross.prefix"/>
 							<option id="cdt.managedbuild.option.gnu.cross.path.1915089641" name="Path" superClass="cdt.managedbuild.option.gnu.cross.path"/>
 							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.ELF" id="cdt.managedbuild.targetPlatform.gnu.cross.1619170480" isAbstract="false" osList="all" superClass="cdt.managedbuild.targetPlatform.gnu.cross"/>
-							<builder arguments="${ProjDirPath}/build_native.sh NDK_DEBUG=1" command="bash" enableAutoBuild="true" id="cdt.managedbuild.builder.gnu.cross.761917705" keepEnvironmentInBuildfile="false" managedBuildOn="false" name="Gnu Make Builder" superClass="cdt.managedbuild.builder.gnu.cross"/>
+							<builder arguments="${ProjDirPath}/build_native.sh NDK_DEBUG=1" command="bash" enableAutoBuild="true" id="cdt.managedbuild.builder.gnu.cross.761917705" keepEnvironmentInBuildfile="false" managedBuildOn="false" name="Gnu Make Builder" parallelBuildOn="false" superClass="cdt.managedbuild.builder.gnu.cross"/>
 							<tool id="cdt.managedbuild.tool.gnu.cross.c.compiler.1699228054" name="Cross GCC Compiler" superClass="cdt.managedbuild.tool.gnu.cross.c.compiler">
 								<option id="gnu.c.compiler.option.include.paths.1786203424" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" useByScannerDiscovery="false" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${NDK_ROOT}/sources/android/native_app_glue&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${NDK_ROOT}/sources/cxx-stl/gnu-libstdc++/4.8/include&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${NDK_ROOT}/platforms/android-21/arch-arm/usr/include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/YGOPro/android/nvcompat/extensions/include}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/YGOPro/netc}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/YGOPro/common}&quot;"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.1893990791" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
 							</tool>
@@ -34,6 +37,7 @@
 									<listOptionValue builtIn="false" value="&quot;${NDK_ROOT}/sources/android/native_app_glue&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${NDK_ROOT}/sources/cxx-stl/gnu-libstdc++/4.8/include&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${NDK_ROOT}/platforms/android-21/arch-arm/usr/include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/YGOPro/android/nvcompat/extensions/include}&quot;"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.1717953642" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
 							</tool>
@@ -48,10 +52,31 @@
 							<tool id="cdt.managedbuild.tool.gnu.cross.assembler.367750108" name="Cross GCC Assembler" superClass="cdt.managedbuild.tool.gnu.cross.assembler">
 								<option id="gnu.both.asm.option.include.paths.456245778" name="Include paths (-I)" superClass="gnu.both.asm.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${NDK_ROOT}/sources/android/native_app_glue&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${NDK_ROOT}/sources/android/cxx-stl/gnu-libstdc++/4.8/include&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${NDK_ROOT}/sources/platforms/android-21/arch-arm/usr/include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${NDK_ROOT}/sources/cxx-stl/gnu-libstdc++/4.8/include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${NDK_ROOT}/platforms/android-21/arch-arm/usr/include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/YGOPro/android/nvcompat/extensions/include}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/YGOPro/netc}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/YGOPro/common}&quot;"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.189581737" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
+							</tool>
+						</toolChain>
+					</folderInfo>
+					<folderInfo id="com.android.toolchain.gcc.799007034.253345790" name="/" resourcePath="nvcompat">
+						<toolChain id="cdt.managedbuild.toolchain.gnu.cross.base.189679180" name="Cross GCC" superClass="cdt.managedbuild.toolchain.gnu.cross.base" unusedChildren="">
+							<option id="cdt.managedbuild.option.gnu.cross.prefix.1140772513.1552993971" name="Prefix" superClass="cdt.managedbuild.option.gnu.cross.prefix.1140772513"/>
+							<option id="cdt.managedbuild.option.gnu.cross.path.1915089641.564561045" name="Path" superClass="cdt.managedbuild.option.gnu.cross.path.1915089641"/>
+							<tool id="cdt.managedbuild.tool.gnu.cross.c.compiler.5930767" name="Cross GCC Compiler" superClass="cdt.managedbuild.tool.gnu.cross.c.compiler.1699228054">
+								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.1850946825" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
+							</tool>
+							<tool id="cdt.managedbuild.tool.gnu.cross.cpp.compiler.1008606461" name="Cross G++ Compiler" superClass="cdt.managedbuild.tool.gnu.cross.cpp.compiler.365685933">
+								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.807545870" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
+							</tool>
+							<tool id="cdt.managedbuild.tool.gnu.cross.c.linker.843230346" name="Cross GCC Linker" superClass="cdt.managedbuild.tool.gnu.cross.c.linker.2134666704"/>
+							<tool id="cdt.managedbuild.tool.gnu.cross.cpp.linker.1604728109" name="Cross G++ Linker" superClass="cdt.managedbuild.tool.gnu.cross.cpp.linker.950166675"/>
+							<tool id="cdt.managedbuild.tool.gnu.cross.archiver.642648089" name="Cross GCC Archiver" superClass="cdt.managedbuild.tool.gnu.cross.archiver.473153504"/>
+							<tool id="cdt.managedbuild.tool.gnu.cross.assembler.1416721088" name="Cross GCC Assembler" superClass="cdt.managedbuild.tool.gnu.cross.assembler.367750108">
+								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.1709917637" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
 							</tool>
 						</toolChain>
 					</folderInfo>
@@ -59,6 +84,7 @@
 						<toolChain id="cdt.managedbuild.toolchain.gnu.cross.base.2132746612" name="Cross GCC" superClass="cdt.managedbuild.toolchain.gnu.cross.base" unusedChildren="">
 							<option id="cdt.managedbuild.option.gnu.cross.prefix.1140772513.1204021659" name="Prefix" superClass="cdt.managedbuild.option.gnu.cross.prefix.1140772513"/>
 							<option id="cdt.managedbuild.option.gnu.cross.path.1915089641.481574351" name="Path" superClass="cdt.managedbuild.option.gnu.cross.path.1915089641"/>
+							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.ELF" id="cdt.managedbuild.targetPlatform.gnu.cross" isAbstract="false" osList="all" superClass="cdt.managedbuild.targetPlatform.gnu.cross"/>
 							<tool id="cdt.managedbuild.tool.gnu.cross.c.compiler.511959632" name="Cross GCC Compiler" superClass="cdt.managedbuild.tool.gnu.cross.c.compiler.1699228054">
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.149363678" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
 							</tool>
@@ -81,6 +107,7 @@
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="jni"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="netc"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="nets"/>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="nvcompat"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="ocgcore"/>
 					</sourceEntries>
 				</configuration>

@@ -1,4 +1,3 @@
-#include "../common/common.h"
 
 #include "../buildin/rapidxml.hpp"
 #include "../buildin/rapidxml_print.hpp"
@@ -775,7 +774,6 @@ namespace sgui
         GLCheckError(__FILE__, __LINE__);
         glDisable(GL_DEPTH_TEST);
         GLCheckError(__FILE__, __LINE__);
-        LOGI("begin use gui_shader");
         gui_shader->Use();
         gui_shader->SetParam1i("texID", 0);
         for(auto& iter : children)
@@ -801,7 +799,6 @@ namespace sgui
     }
     
     bool SGGUIRoot::LoadConfigs(const std::wstring& gui_conf) {
-    	LOGI("LoadConfigs");
         AddConfig("basic", SGGUIRoot::basic_config);
         AddConfig("panel", SGPanel::panel_config);
         AddConfig("window", SGWindow::window_config);

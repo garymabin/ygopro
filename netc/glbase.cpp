@@ -174,7 +174,6 @@ namespace glbase {
     }
     
     bool Shader::Use() {
-    	LOGI("program = %d", program);
         if(program) {
             glUseProgram(program);
             GLCheckError(__FILE__, __LINE__);

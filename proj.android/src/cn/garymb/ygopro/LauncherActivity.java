@@ -30,6 +30,8 @@ public class LauncherActivity extends FragmentActivity implements
 			intent.setClass(this, MainActivity.class);
 			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
 			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			intent.putExtra("arguments", StaticApplication
+					.peekInstance().getCoreConfigDir());
 			startActivity(intent);
 		} else {
 			Toast.makeText(this, R.string.copy_res_failed_hint,
